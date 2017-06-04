@@ -1,0 +1,157 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing:border-box;                                   /* This sets all elements to be the actual set dimensions, disregarding padding and borders */
+  webkit-backface-visibility: hidden;                     /* Hide the backface of elements - usuefull for 3d effects */
+  -webkit-transition: translate3d(0,0,0);                  /* Turns on hardware acceleration - not known to be of benefit in CCG, but won't hurt */
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background:transparent;                          /* The HTML consumer actually makes your background transparent by default, unless a color or image is specified - but this might be usefull when debugging in browsers */
+    overflow:hidden;                                 /* Hide any overflowing elements - to disable scollbars */
+    -webkit-font-smoothing:antialiased !important;
+}
+
+
+@-webkit-keyframes moving-gradient {
+    0% { background-position: left bottom; }
+    100% { background-position: right bottom; }
+}
+
+h1, h2, h3, h4 {
+    margin:0;
+    padding:0;
+}
+
+.large {
+    top: -13px;
+    font-size: 40px !important;
+}
+
+/**************************************************/
+/*              [Layout]                          */
+/**************************************************/
+.left{
+    position: absolute;
+    left: 50px;
+}
+
+.right {
+    position: absolute;
+    right: 50px;
+    text-align: right;
+}
+
+.bottom {
+    bottom: 50px;
+}
+
+.fullwidth {
+	width: 1180px;
+	}
+
+.top {
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	justify-content: center;
+    flex-direction: column;
+}
+
+.center {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}
+
+.wrapper {
+    overflow: hidden;
+}
+
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+.row:after {
+  display: table;
+  content: " ";
+}
+
+.row:after {
+  clear: both;
+}
+
+.backgroundimage img {
+      position: absolute;
+      width: 1280px;
+      height: 720px;
+      background-size: cover;
+      background-image: url("/images/largelogo.jpg");
+    }
+    
+/**************************************************/
+/*              [Social Media]                    */
+/**************************************************/
+
+.social-media {
+  width: 500px;
+  background-color: rgba(255, 255, 255, 0.0);
+  font-size: 0.0vw;
+  border-radius: 5px;
+  background-clip: padding-box;
+}
+
+.social-media .big-center iframe {
+	position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    
+}
+
+.middleofeverything {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.social-media twitterwidget::shadow .Tweet-brand, .social-media twitterwidget::shadow .Tweet-actions {
+  display: none;
+}
+
+.instagram-media .instagram-media-rendered {
+    max-height: 620px; 
+}
+
+.timeline .stream { 
+	max-height: 640px !important;
+}
+ol.h-feed {
+	max-height:640px !important;
+}
+#twitter-widget-0 {
+	max-height:640px !important;
+}
+
+.twitter-tweet .twitter-tweet-rendered {
+    max-height: 640px; 
+}
+
+.fb-post .fb_iframe_widget .fb_iframe_widget_fluid {	
+    max-height: 620px; 
+    background-color: #FFF;
+}

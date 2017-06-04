@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="cgApp">
+    <head>
+        <meta charset="UTF-8">
+        	<title>CG</title>
+        <link rel="stylesheet" href="/css/reset.css" />
+        <link href="/css/fonts/mreavesxl.css" rel="stylesheet" type="text/css">
+        <link href="/css/theme.css" rel="stylesheet" type="text/css">
+        <link href="/css/animation.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <div ng-controller="socialmediaCtrl">
+			<div class="backgroundimage">
+				<img ng-if="socialmedia.image" ng-src="/images/{{socialmedia.image}}.jpg" ng-hide="socialmedia.show">
+				<img ng-if="socialmedia.imageactive" ng-src="/images/{{socialmedia.imageactive}}.jpg" class="toggle" ng-show="socialmedia.show">
+				<img ng-if="!socialmedia.imageactive" src="/images/blurredlogo.jpg" class="toggle" ng-show="socialmedia.show"
+			</div> 
+			<div id="socialmedia" my-directive class="{{socialmedia.pos}} social-media">
+				<div ng-bind-html="tweetHTML" class="{{socialmedia.animate}} tweetcontent" style="-webkit-transform:scale({{socialmedia.scale}});" ng-show="socialmedia.show"></div>
+			</div>
+        </div>
+
+        <script type="text/javascript" src="/js/socket.io.js"></script>
+        <script type="text/javascript" src="/js/libs/angular.min.js"></script>
+        <script type="text/javascript" src="/js/libs/angular-animate.min.js"></script>
+        <script type="text/javascript" src="/js/ng-socket-io.js"></script>
+        <script type="text/javascript" src="/js/cg.js"></script>
+        <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script async defer src="http://platform.instagram.com/en_US/embeds.js"></script>
+
+		
+    </body>
+</html>
