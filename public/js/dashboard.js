@@ -14,6 +14,13 @@ app.controller('AppCtrl', ['$scope', '$location',
             type: 'link',
             icon: 'blue twitter',
         });
+		
+		$scope.menu.push({
+            name: 'Twitter Collections',
+            url: '/twitter-collections',
+            type: 'link',
+            icon: 'blue twitter',
+        });
 
     }
 ]);
@@ -30,6 +37,10 @@ app.config(['$routeProvider', 'localStorageServiceProvider',
                 templateUrl: '/admin/templates/social-media.tmpl.html',
                 controller: 'socialmediaCGController'
             })
+			.when("/twitter-collections", {
+                templateUrl: '/admin/templates/tweet-collections.tmpl.html',
+                controller: 'twittercollectionsCGController'
+            })
             .otherwise({redirectTo: '/social-media'});
     }
 ]);
@@ -41,6 +52,27 @@ app.controller('socialmediaCGController', ['$scope', 'socket',
             $scope.socialmedia = msg;
             $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;
 			
+        });
+
+        $scope.$watch('socialmedia', function() {
+            if ($scope.socialmedia) {
+                socket.emit("socialmedia", $scope.socialmedia);
+            } else {
+                getSocialMediaData();
+            }
+        }, true);
+
+        function getSocialMediaData() {
+            socket.emit("socialmedia:get");
+        }
+
+    }
+]);
+
+app.controller('twittercollectionsCGController', ['$scope', 'socket',
+    function($scope, socket) {
+        socket.on("socialmedia", function (msg) {
+            $scope.socialmedia = msg;	
         });
 
         $scope.$watch('socialmedia', function() {

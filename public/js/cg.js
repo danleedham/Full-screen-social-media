@@ -97,14 +97,21 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
 
 ]);
 
-angular.module('myModule', [])
-  .directive('myDirective', function($timeout) {
-    return {
-        restrict: 'A',
-        link: function(scope, element) {
-            console.log(element[0].offsetHeight);
-            
+app.controller('twittercollectionsCtrl', ['$scope', '$interval', '$http', 'socket',
+    function($scope, $interval, $http, socket){        
+        socket.on("twittercollections", function (msg) {
+				$scope.twittercollections = msg;
+			});
+        
+        $scope.$watch('twittercollections', function() {
+            if (!$scope.twittercollections) {
+                getTwitterCollectionsData();
+            }
+        }, true);
+
+        function getTwitterCollectionsData() {
+            socket.emit("twittercollections:get");
         }
-    };
-  })
-;
+    }
+
+]);
