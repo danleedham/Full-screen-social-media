@@ -155,3 +155,9 @@ ol.h-feed {
     max-height: 620px; 
     background-color: #FFF;
 }
+
+.twittercollections {
+	position: absolute;
+	left: 12.5%;
+	width: 75%;
+	}

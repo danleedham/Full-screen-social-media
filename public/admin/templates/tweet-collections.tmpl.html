@@ -31,52 +31,9 @@
     <div class="ui grid">
     <div class="four wide column center"> </div>  
 	<div class="eight wide column center">
-		<a class="twitter-grid"
-		  href="https://twitter.com/TwitterDev/timelines/539487832448843776">
-		National Park Tweets
-		</a>
-        <div id=tweet_details></div>
+	<a class="twitter-grid" href="https://twitter.com/TwitterDev/timelines/539487832448843776">National Park Tweets</a> 
+	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 	</div>
 	<div class="four wide column center"> </div>  	
 	</div>
-			
-		<script>
-		
-			$(document).ready(function() {
-			  $("#resolve-tweet").click(function() {
-				var url = $("#socialUrl").val();
-				var caption = $("#socialCaption").val();		
-				
-				if (url.includes("instagram.com")) { 
-					oEmbedUrl = 'http://api.instagram.com/oembed?url=';
-				
-				} else if (url.includes("facebook.com")) {
-					 		if 	(url.includes("video")) {
-          							oEmbedUrl = 'https://www.facebook.com/plugins/video/oembed.json/?url='; 
-          					} else { 
-          							oEmbedUrl = 'https://www.facebook.com/plugins/post/oembed.json/?url=';
-          			 		}	
-          			 
-          			 
-          		} else { 
-          			oEmbedUrl = 'https://api.twitter.com/1/statuses/oembed.json?url=';
-          		}
-          			
-				if (url == "") {
-				  $(".controls").addClass("error");
-				} else {
-				  $("#tweet_div").show();
-				  $.ajax({
-					url: oEmbedUrl + url,
-					dataType: "jsonp",
-					success: function(data) {
-					  $('#tweet_details').html(data.html);
-					}
-				  });
-				}
-			  })
-			})
-	  </script>
-
-
-   
+	
