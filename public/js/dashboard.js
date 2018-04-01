@@ -50,7 +50,17 @@ app.controller('socialmediaCGController', ['$scope', 'socket',
     function($scope, socket) {
         socket.on("socialmedia", function (msg) {
             $scope.socialmedia = msg;
-            $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;			
+            $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;	
+            if($scope.socialmedia.imageactive == "none"){
+                $scope.socialmedia.imageactiveShow = false;
+            } else {
+                $scope.socialmedia.imageactiveShow = true;
+            }
+            if($scope.socialmedia.image == "none"){
+                $scope.socialmedia.imageShow = false;
+            } else {
+                $scope.socialmedia.imageShow = true;
+            }
         });
 
         $scope.$watch('socialmedia', function() {
