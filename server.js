@@ -7,6 +7,7 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
 var socialmedia = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};
+var twittercollections = {};
 
 //Clock Functions
 var stopwatch = new Stopwatch();
@@ -30,6 +31,18 @@ io.on('connection', function(socket) {
 
     socket.on("socialmedia:get", function(msg) {
         io.sockets.emit("socialmedia", socialmedia);
+    });
+    
+    /*
+	 * 		Twitter Collections
+	 */
+	socket.on("twittercollections", function(msg) {
+        twittercollections = msg;
+		io.sockets.emit("twittercollections", msg);
+	});
+
+    socket.on("twittercollections:get", function(msg) {
+        io.sockets.emit("twittercollections", twittercollections);
     });
 
 

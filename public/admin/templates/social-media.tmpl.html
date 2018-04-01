@@ -67,27 +67,24 @@
   </div>
   
     <div class="ui grid">
-       			<div class="four wide field">
-					<label>Scale Override (%)</label>
-					<input type="number" placeholder="Scale Override" ng-model="socialmedia.scalepc">	
-					<button class="ui red button" ng-click="socialmedia.scalepc = 100">
-						<i class="ban icon"></i>Reset
-					</button>
-				</div>	
-				<div class="four wide field">
-					<label>Simplify Output</label>
-					<checkbox ng-model="socialmedia.hidemedia" size="large" type="toggle"></checkbox>
- 				</div>
-                <div class="four field">
-						<label>Styling</label>
-						 <dropdown title="Style Type"  ng-model="socialmedia.styling">
-							<dropdown-group>onLight</dropdown-group>
-							<dropdown-group>onDark</dropdown-group>
-						  </dropdown>
-				</div>
- 				<div class="four wide field">
-			 		<button class="ui green button" ng-click="resizeDiv()">Force Resize</button>
-			 	</div>
+        <div class="four wide field">
+            <label>Scale Override (%)</label>
+            <input type="number" placeholder="Scale Override" ng-model="socialmedia.scalepc">	
+            <button class="ui red button" ng-click="socialmedia.scalepc = 100">
+                <i class="ban icon"></i>Reset
+            </button>
+        </div>	
+        <div class="four wide field">
+            <label>Simplify Output</label>
+            <checkbox ng-model="socialmedia.hidemedia" size="large" type="toggle"></checkbox>
+        </div>
+        <div class="four field">
+                <label>Styling</label>
+                 <dropdown title="Style Type"  ng-model="socialmedia.styling">
+                    <dropdown-group>onLight</dropdown-group>
+                    <dropdown-group>onDark</dropdown-group>
+                  </dropdown>
+        </div>
   </div>							
 <br>
  <div class="ui divider"></div>

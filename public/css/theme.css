@@ -175,3 +175,7 @@ ol.h-feed {
 .onLight {
     background-color: #fff;
 }
+
+.twitter-grid {
+    color: transparent !important;
+}

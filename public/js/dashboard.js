@@ -80,20 +80,20 @@ app.controller('socialmediaCGController', ['$scope', 'socket',
 
 app.controller('twittercollectionsCGController', ['$scope', 'socket',
     function($scope, socket) {
-        socket.on("socialmedia", function (msg) {
-            $scope.socialmedia = msg;	
+        socket.on("twittercollections", function (msg) {
+            $scope.twittercollections = msg;	
         });
 
-        $scope.$watch('socialmedia', function() {
-            if ($scope.socialmedia) {
-                socket.emit("socialmedia", $scope.socialmedia);
+        $scope.$watch('twittercollections', function() {
+            if ($scope.twittercollections) {
+                socket.emit("twittercollections", $scope.twittercollections);
             } else {
-                getSocialMediaData();
+                getTwitterCollectionsData();
             }
         }, true);
 
-        function getSocialMediaData() {
-            socket.emit("socialmedia:get");
+        function getTwitterCollectionsData() {
+            socket.emit("twittercollections:get");
         }
 
     }

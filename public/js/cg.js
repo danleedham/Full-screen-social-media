@@ -81,10 +81,6 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
              }
           );
         };
-        
-        function resizeDiv() {
-         	
-        }
         			
         $scope.$watch('socialmedia', function() {
             if (!$scope.socialmedia) {
@@ -99,11 +95,19 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
 
 ]);
 
-app.controller('twittercollectionsCtrl', ['$scope', '$interval', '$http', 'socket',
-    function($scope, $interval, $http, socket){        
+app.controller('twittercollectionsCtrl', ['$scope', '$interval', '$http', 'socket', '$sce',
+    function($scope, $interval, $http, socket,  $sce){        
         socket.on("twittercollections", function (msg) {
-				$scope.twittercollections = msg;
-			});
+            $scope.twittercollections = msg;
+            if(msg.show){
+                var screenname = msg.screenname;
+                var collectionid = msg.collectionid;
+                var collectionCode = '<a class="twitter-grid" href="https://twitter.com/'+screenname+'/timelines/'+collectionid+'"> Embedded Tweets </a>';
+                $scope.collectionHTML = $sce.trustAsHtml(collectionCode);
+                // console.log(collectionCode);
+                twttr.widgets.load();
+            }
+        });
         
         $scope.$watch('twittercollections', function() {
             if (!$scope.twittercollections) {
