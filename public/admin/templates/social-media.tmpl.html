@@ -36,17 +36,17 @@
 				<div class="four field">
 						<label>Background Image</label>
 						 <dropdown title="Holding BG Image"  ng-model="socialmedia.image">
-							<dropdown-group>largelogo.jpg</dropdown-group>
-							<dropdown-group>topleftlogo.jpg</dropdown-group>
-							<dropdown-group>toprightlogo.jpg</dropdown-group>
+							<dropdown-group>largelogo.png</dropdown-group>
+							<dropdown-group>topleftlogo.png</dropdown-group>
+							<dropdown-group>toprightlogo.png</dropdown-group>
 						  </dropdown>
 				</div>
 					<div class="four field">
 						<label>Active Background Image</label>
 						 <dropdown title="Active BG Image"  ng-model="socialmedia.imageactive">
-							<dropdown-group>blurredlogo.jpg</dropdown-group>
-							<dropdown-group>topleftlogo.jpg</dropdown-group>
-							<dropdown-group>toprightlogo.jpg</dropdown-group>
+							<dropdown-group>blurredlogo.png</dropdown-group>
+							<dropdown-group>topleftlogo.png</dropdown-group>
+							<dropdown-group>toprightlogo.png</dropdown-group>
 						  </dropdown>
 				</div>
 				<div class="four field">
@@ -75,6 +75,10 @@
 				<div class="four wide field">
 					<label>Simplify Output</label>
 					<checkbox ng-model="socialmedia.hidemedia" size="large" type="toggle"></checkbox>
+ 				</div>
+ 				<div class="four wide field">
+					<label>Remove Text</label>
+					<checkbox ng-model="socialmedia.hidetext" size="large" type="toggle"></checkbox>
  				</div>
  				<div class="four wide field">
 			 		<button class="ui green button" ng-click="resizeDiv()">Force Resize</button>

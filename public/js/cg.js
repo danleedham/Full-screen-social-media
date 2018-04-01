@@ -13,7 +13,9 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
             if (!showTweet) {
                 $scope.showTweet = false;
             }
-            fetchTweetHTML(msg.tweet);
+            if(tweetUrl !== ""){
+                fetchTweetHTML(msg.tweet);
+            }
         });
 
 // Now let's go get the html code from our provider

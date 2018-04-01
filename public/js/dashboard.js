@@ -50,8 +50,7 @@ app.controller('socialmediaCGController', ['$scope', 'socket',
     function($scope, socket) {
         socket.on("socialmedia", function (msg) {
             $scope.socialmedia = msg;
-            $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;
-			
+            $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;			
         });
 
         $scope.$watch('socialmedia', function() {

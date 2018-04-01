@@ -98,7 +98,7 @@ h1, h2, h3, h4 {
       width: 1280px;
       height: 720px;
       background-size: cover;
-      background-image: url("/images/largelogo.jpg");
+      /* background-image: url("/images/largelogo.png"); */
     }
     
 /**************************************************/
@@ -154,4 +154,12 @@ ol.h-feed {
 .fb-post .fb_iframe_widget .fb_iframe_widget_fluid {	
     max-height: 620px; 
     background-color: #FFF;
+}
+
+.hideElement {
+    display: none;
+}
+
+.showElement {
+    display: block;
 }

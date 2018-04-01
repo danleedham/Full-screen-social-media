@@ -12,9 +12,9 @@
     <body>
         <div ng-controller="socialmediaCtrl">
 			<div class="backgroundimage">
-				<img ng-if="socialmedia.image" ng-src="/images/{{socialmedia.image}}.jpg" ng-hide="socialmedia.show">
-				<img ng-if="socialmedia.imageactive" ng-src="/images/{{socialmedia.imageactive}}.jpg" class="toggle" ng-show="socialmedia.show">
-				<img ng-if="!socialmedia.imageactive" src="/images/blurredlogo.jpg" class="toggle" ng-show="socialmedia.show"
+				<img ng-if="socialmedia.image" ng-src="/images/{{socialmedia.image}}" ng-hide="socialmedia.show">
+				<img ng-if="socialmedia.imageactive" ng-src="/images/{{socialmedia.imageactive}}" class="toggle" ng-show="socialmedia.show">
+				<img ng-if="!socialmedia.imageactive" src="/images/blurredlogo.png" class="toggle" ng-show="socialmedia.show"
 			</div> 
 			<div id="socialmedia" my-directive class="{{socialmedia.pos}} social-media">
 				<div ng-bind-html="tweetHTML" class="{{socialmedia.animate}} tweetcontent" style="-webkit-transform:scale({{socialmedia.scale}});" ng-show="socialmedia.show"></div>
