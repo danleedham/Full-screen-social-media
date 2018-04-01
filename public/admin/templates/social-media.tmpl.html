@@ -76,10 +76,13 @@
 					<label>Simplify Output</label>
 					<checkbox ng-model="socialmedia.hidemedia" size="large" type="toggle"></checkbox>
  				</div>
- 				<div class="four wide field">
-					<label>Remove Text</label>
-					<checkbox ng-model="socialmedia.hidetext" size="large" type="toggle"></checkbox>
- 				</div>
+                <div class="four field">
+						<label>Styling</label>
+						 <dropdown title="Style Type"  ng-model="socialmedia.styling">
+							<dropdown-group>onLight</dropdown-group>
+							<dropdown-group>onDark</dropdown-group>
+						  </dropdown>
+				</div>
  				<div class="four wide field">
 			 		<button class="ui green button" ng-click="resizeDiv()">Force Resize</button>
 			 	</div>

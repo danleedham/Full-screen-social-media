@@ -163,3 +163,11 @@ ol.h-feed {
 .showElement {
     display: block;
 }
+
+.onDark {
+    background-color: #000 !important;
+}
+
+.onLight {
+    background-color: #fff;
+}
