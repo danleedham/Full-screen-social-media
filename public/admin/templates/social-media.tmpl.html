@@ -1,6 +1,7 @@
 <div class="ui form segment">
   <h2>Social Media</h2>
 
+   <!-- Main Input -->
    <div class="ui grid">
        <div class="sixteen wide column">
 			<div class="fields">
@@ -14,12 +15,15 @@
 						<button id=resolve-tweet class="ui blue button">Preview </button>
 				</div>				
 				<div class="four wide field">
-						<label>Make live</label>
-						<checkbox ng-model="socialmedia.show" size="large" type="toggle"></checkbox>
+                    <label>Show live</label>
+                    <button class="ui green button" ng-click="show()">Show</button>
+                    <button class="ui red button" ng-click="hide()">Hide</button>
  				</div>
 			</div>
 		</div>
-</div>
+</div> <!-- Main Input -->
+   
+   <!-- Location, animation etc -->
    <div class="ui grid">
        <div class="sixteen wide column">
        		<div class="fields">
@@ -64,8 +68,9 @@
 				</div>
  			</div>
  		</div>
-  </div>
+  </div> <!-- Location, animation etc -->
   
+   <!-- Scale, style etc -->
     <div class="ui grid">
         <div class="four wide field">
             <label>Scale Override (%)</label>
@@ -78,12 +83,16 @@
             <label>Simplify Output</label>
             <checkbox ng-model="socialmedia.hidemedia" size="large" type="toggle"></checkbox>
         </div>
-        <div class="four field">
+        <div class="four wide field">
                 <label>Styling</label>
                  <dropdown title="Style Type"  ng-model="socialmedia.styling">
                     <dropdown-group>onLight</dropdown-group>
                     <dropdown-group>onDark</dropdown-group>
                   </dropdown>
+        </div>
+        <div class="four wide field">
+            <label>Auto-Update</label>
+             <checkbox ng-model="socialmedia.autoUpdate" size="large" type="toggle"></checkbox>
         </div>
   </div>							
 <br>

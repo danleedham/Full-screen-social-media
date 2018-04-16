@@ -2,7 +2,7 @@
 <html ng-app="cgApp">
     <head>
         <meta charset="UTF-8">
-        	<title>CG</title>
+        	<title>Live</title>
         <link rel="stylesheet" href="/css/reset.css" />
         <link href="/css/fonts/mreavesxl.css" rel="stylesheet" type="text/css">
         <link href="/css/theme.css" rel="stylesheet" type="text/css">
@@ -10,9 +10,6 @@
     </head>
 
     <body>
-        <div ng-controller="twittercollectionsCtrl">
-            <div ng-bind-html="collectionHTML" ng-show="twittercollections.show"></div>
-        </div>
         <div ng-controller="socialmediaCtrl">
 			<div class="backgroundimage" ng-class="socialmedia.styling">
 				<img ng-if="socialmedia.imageShow" ng-src="/images/{{socialmedia.image}}" ng-hide="socialmedia.show" ng-class="socialmedia.styling">

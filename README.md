@@ -1,6 +1,6 @@
-# Roses CG Graphic
+# Full Screen Social Media
 
-## Launching Graphics
+## Launching
 
 ### Windows
 Double click
@@ -22,3 +22,6 @@ node server.js
 For the [admin](http://127.0.0.1:3000/admin) page, navigate to http://127.0.0.1:3000/admin
 
 For the [graphics](http://127.0.0.1:3000) output, navigate to http://127.0.0.1:3000
+
+## Controlling
+First navigate to the [admin](http://127.0.0.1:3000/admin) page, then 

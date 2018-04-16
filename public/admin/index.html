@@ -15,14 +15,14 @@
         <div class="ui three column grid">
           <div class="column">
 
-            <div class="ui large header"><img src="../images/logo.png" /> Social Media Controller</div>
+            <div class="ui large header">Social Media Controller</div>
           </div>
         </div>
       </div>
     </header>
 
     <div class="ui page grid">
-      <aside class="ui four wide column">
+      <aside class="ui three wide column">
         <div class="ui fluid large vertical pointing menu red">
           <a ng-repeat="section in menu" class="item" ng-href="#{{section.url}}" ng-class="{active:isActive(section.url)}" >
             {{ section.name }}
@@ -32,7 +32,7 @@
         </div>
       </aside>
 
-      <div class="ui twelve wide column" ng-view>
+      <div class="ui thirteen wide column" ng-view>
       </div>
     </div>
 

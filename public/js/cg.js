@@ -1,26 +1,28 @@
 var app = angular.module('cgApp', ['ngAnimate', 'socket-io']);
 
-// Social Media Controller, as developed by Dan Leedham with help from the amazing Tom J
-// Initialise with the usual plus http for grabbing data from social media sites
-// SCE allows us to use Trust HTML for the data we get back from social media sites
+// Social Media Controller, as developed by Dan Leedham with help from the amazing Tom J. Initialize with the usual plus http for grabbing data from social media sites.  SCE allows us to use Trust HTML for the data we get back from social media sites
 app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
     function($scope, $http, socket, $sce){
-        var showTweet = false;
+
         socket.on("socialmedia", function (msg) {
-            tweetUrl = msg.tweet;
-            $scope.socialmedia = msg;
-            showTweet = msg.show;
-            if (!showTweet) {
-                $scope.showTweet = false;
-            }
-            if(tweetUrl !== ""){
-                fetchTweetHTML(msg.tweet);
+            if (msg === "hide") {
+                if($scope.socialmedia){
+                    $scope.socialmedia.show = false;
+                }
+                //console.log("Hiding Content");
+            } else {
+                $scope.socialmedia = msg;
+                if(msg.tweet !== ""){
+                    $scope.socialmedia.show = true;  
+                    fetchTweetHTML(msg.tweet);
+                    //console.log("Fetching post");
+                } else {
+                    //console.log("No post URL provided");
+                }
             }
         });
 
-// Now let's go get the html code from our provider
-// tweetUrl in the function is the text entered by the user in the backend
-// tweetUrl requires a full post/video url to work. References to 'tweet' usually mean post
+        // Now let's go get the html code from our provider. tweetUrl in the function is the text entered by the user in the backend. tweetUrl requires a full post/video url to work. References to 'tweet' usually mean post. I'm just lazy soz. 
 		var fetchTweetHTML = function (tweetUrl) {
           var config = {headers:  {
               'Accept': 'application/jsonp',
@@ -28,8 +30,7 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
             }
           };
           
-// Checks the user provided url, determines which oEmbed engine to use
-// For more oEmbed sites, add another else if        
+        // Checks the user provided url, determines which oEmbed engine to use. For more oEmbed sites, add another else if        
          if (tweetUrl.indexOf('instagram.com') >= 0) {
                   oEmbedUrl = 'http://api.instagram.com/oembed?url=';
           } else if (tweetUrl.indexOf('facebook.com') >= 0) {
@@ -74,9 +75,9 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
 								fjs.parentNode.insertBefore(js, fjs);
 							  }(document, 'script', 'facebook-jssdk')); }
                    else { twttr.widgets.load(); }
-                    if (showTweet) {
-                        $scope.showTweet = showTweet;
-                    }
+                   $scope.showTweet = true;
+                   console.log($scope.socialmedia);
+
                 });
              }
           );
@@ -95,28 +96,20 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
 
 ]);
 
-app.controller('twittercollectionsCtrl', ['$scope', '$interval', '$http', 'socket', '$sce',
+app.controller('settingsCtrl', ['$scope', '$interval', '$http', 'socket', '$sce',
     function($scope, $interval, $http, socket,  $sce){        
-        socket.on("twittercollections", function (msg) {
-            $scope.twittercollections = msg;
-            if(msg.show){
-                var screenname = msg.screenname;
-                var collectionid = msg.collectionid;
-                var collectionCode = '<a class="twitter-grid" href="https://twitter.com/'+screenname+'/timelines/'+collectionid+'"> Embedded Tweets </a>';
-                $scope.collectionHTML = $sce.trustAsHtml(collectionCode);
-                // console.log(collectionCode);
-                twttr.widgets.load();
-            }
+        socket.on("settings", function (msg) {
+            $scope.settings = msg;
         });
         
-        $scope.$watch('twittercollections', function() {
-            if (!$scope.twittercollections) {
-                getTwitterCollectionsData();
+        $scope.$watch('settings', function() {
+            if (!$scope.settings) {
+                getsettingsData();
             }
         }, true);
 
-        function getTwitterCollectionsData() {
-            socket.emit("twittercollections:get");
+        function getsettingsData() {
+            socket.emit("settings:get");
         }
     }
 

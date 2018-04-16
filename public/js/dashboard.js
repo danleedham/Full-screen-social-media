@@ -16,10 +16,10 @@ app.controller('AppCtrl', ['$scope', '$location',
         });
 		
 		$scope.menu.push({
-            name: 'Twitter Collections',
-            url: '/twitter-collections',
+            name: 'General Settings',
+            url: '/settings',
             type: 'link',
-            icon: 'blue twitter',
+            icon: 'black settings',
         });
 
     }
@@ -37,35 +37,46 @@ app.config(['$routeProvider', 'localStorageServiceProvider',
                 templateUrl: '/admin/templates/social-media.tmpl.html',
                 controller: 'socialmediaCGController'
             })
-			.when("/twitter-collections", {
-                templateUrl: '/admin/templates/tweet-collections.tmpl.html',
-                controller: 'twittercollectionsCGController'
+			.when("/settings", {
+                templateUrl: '/admin/templates/settings.tmpl.html',
+                controller: 'settingsCGController'
             })
             .otherwise({redirectTo: '/social-media'});
     }
 ]);
 
 
-app.controller('socialmediaCGController', ['$scope', 'socket',
-    function($scope, socket) {
+app.controller('socialmediaCGController', ['$scope', 'socket', 'localStorageService',
+    function($scope, socket, localStorageService) {
+       
+        var stored = localStorageService.get('socialmedia');
+        
         socket.on("socialmedia", function (msg) {
-            $scope.socialmedia = msg;
-            $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;	
-            if($scope.socialmedia.imageactive == "none"){
-                $scope.socialmedia.imageactiveShow = false;
-            } else {
-                $scope.socialmedia.imageactiveShow = true;
-            }
-            if($scope.socialmedia.image == "none"){
-                $scope.socialmedia.imageShow = false;
-            } else {
-                $scope.socialmedia.imageShow = true;
+            if(msg === "hide"){
+                $scope.socialmedia.lastVisibility = false;
+            } else { 
+                if(msg.lastVisibility !== false){
+                    $scope.socialmedia = msg;
+                    $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;	
+                    if($scope.socialmedia.imageactive == "none"){
+                        $scope.socialmedia.imageactiveShow = false;
+                    } else {
+                        $scope.socialmedia.imageactiveShow = true;
+                    }
+                    if($scope.socialmedia.image == "none"){
+                        $scope.socialmedia.imageShow = false;
+                    } else {
+                        $scope.socialmedia.imageShow = true;
+                    }
+                }
             }
         });
 
         $scope.$watch('socialmedia', function() {
             if ($scope.socialmedia) {
-                socket.emit("socialmedia", $scope.socialmedia);
+                if($scope.autoUpdate !== false){
+                    socket.emit("socialmedia", $scope.socialmedia);
+                }
             } else {
                 getSocialMediaData();
             }
@@ -74,26 +85,38 @@ app.controller('socialmediaCGController', ['$scope', 'socket',
         function getSocialMediaData() {
             socket.emit("socialmedia:get");
         }
+        
+        $scope.show = function() {
+            console.log($scope.socialmedia);
+            $scope.socialmedia.lastVisibility = true;
+            socket.emit('socialmedia', $scope.socialmedia);
+        };
+        
+         $scope.hide = function() {
+            console.log("Hide");
+            $scope.socialmedia.lastVisibility = false;
+            socket.emit('socialmedia', 'hide');
+        };
 
     }
 ]);
 
-app.controller('twittercollectionsCGController', ['$scope', 'socket',
+app.controller('settingsCGController', ['$scope', 'socket',
     function($scope, socket) {
-        socket.on("twittercollections", function (msg) {
-            $scope.twittercollections = msg;	
+        socket.on("settings", function (msg) {
+            $scope.settings = msg;	
         });
 
-        $scope.$watch('twittercollections', function() {
-            if ($scope.twittercollections) {
-                socket.emit("twittercollections", $scope.twittercollections);
+        $scope.$watch('settings', function() {
+            if ($scope.settings) {
+                socket.emit("settings", $scope.settings);
             } else {
-                getTwitterCollectionsData();
+                getSettingsData();
             }
         }, true);
 
-        function getTwitterCollectionsData() {
-            socket.emit("twittercollections:get");
+        function getSettingsData() {
+            socket.emit("settings:get");
         }
 
     }
