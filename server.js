@@ -6,7 +6,7 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
-var socialmedia = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100, lastVisibility: false};
+var socialmedia = {tweet: "", image: "largelogo.png", imageactive: "none", pos: "middleofeverything", tweethtml: "", scale: 100, scalepc: 100, lastVisibility: false, animate: "toggle", styling: "onLight"};
 
 //Clock Functions
 var stopwatch = new Stopwatch();

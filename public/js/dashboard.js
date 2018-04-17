@@ -49,26 +49,32 @@ app.config(['$routeProvider', 'localStorageServiceProvider',
 app.controller('socialmediaCGController', ['$scope', 'socket', 'localStorageService',
     function($scope, socket, localStorageService) {
        
-        var stored = localStorageService.get('socialmedia');
+       if($scope.socialmedia){
+            var stored = localStorageService.get('lower_thirds');
+            if(stored == undefined){
+                console.log("Setting default values");            
+                $scope.socialmedia = {tweet: "", image: "largelogo.png", imageactive: "none", pos: "middleofeverything", tweethtml: "", scale: 100, scalepc: 100, lastVisibility: false, animate: "toggle", styling: "onLight"};} else {
+                    $scope.socialmedia = stored;
+                }
+       }
         
         socket.on("socialmedia", function (msg) {
             if(msg === "hide"){
                 $scope.socialmedia.lastVisibility = false;
             } else { 
-                if(msg.lastVisibility !== false){
-                    $scope.socialmedia = msg;
-                    $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;	
-                    if($scope.socialmedia.imageactive == "none"){
-                        $scope.socialmedia.imageactiveShow = false;
-                    } else {
-                        $scope.socialmedia.imageactiveShow = true;
-                    }
-                    if($scope.socialmedia.image == "none"){
-                        $scope.socialmedia.imageShow = false;
-                    } else {
-                        $scope.socialmedia.imageShow = true;
-                    }
+                $scope.socialmedia = msg;
+                $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;	
+                if($scope.socialmedia.imageactive == "none"){
+                    $scope.socialmedia.imageactiveShow = false;
+                } else {
+                    $scope.socialmedia.imageactiveShow = true;
                 }
+                if($scope.socialmedia.image == "none"){
+                    $scope.socialmedia.imageShow = false;
+                } else {
+                    $scope.socialmedia.imageShow = true;
+                }
+
             }
         });
 
