@@ -1,4 +1,4 @@
-# Roses CG Graphic
+# Full screen social meda graphics
 
 ## Launching Graphics
 
