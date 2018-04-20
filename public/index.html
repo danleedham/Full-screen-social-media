@@ -19,7 +19,7 @@
 				<img ng-if="socialmedia.imageactiveShow" ng-src="/images/{{socialmedia.imageactive}}" class="toggle" ng-show="socialmedia.show" ng-class="socialmedia.styling">
 			</div> 
 			<div id="socialmedia" my-directive class="{{socialmedia.pos}} social-media">
-				<div ng-bind-html="tweetHTML" class="{{socialmedia.animate}} tweetcontent" style="-webkit-transform:scale({{socialmedia.scale}});" ng-show="socialmedia.show"></div>
+				<div ng-bind-html="tweetHTML" class="{{socialmedia.animate}} tweetcontent" style="-webkit-transform:scale({{socialmedia.scale}}); -webkit-transform-origin: {{socialmedia.pos}}" ng-show="socialmedia.show"></div>
 			</div>
         </div>
         
