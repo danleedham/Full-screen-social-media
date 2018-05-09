@@ -179,3 +179,8 @@ ol.h-feed {
 .twitter-grid {
     color: transparent !important;
 }
+
+body {
+    background-image: url("/images/largelogo.png");
+    width: 100%;
+}

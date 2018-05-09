@@ -50,12 +50,13 @@ app.controller('socialmediaCGController', ['$scope', 'socket', 'localStorageServ
     function($scope, socket, localStorageService) {
        
        if($scope.socialmedia){
-            var stored = localStorageService.get('lower_thirds');
+            var stored = localStorageService.get('socialmedia');
             if(stored == undefined){
                 console.log("Setting default values");            
-                $scope.socialmedia = {tweet: "", image: "largelogo.png", imageactive: "none", pos: "middleofeverything", tweethtml: "", scale: 100, scalepc: 100, lastVisibility: false, animate: "toggle", styling: "onLight"};} else {
-                    $scope.socialmedia = stored;
-                }
+                $scope.socialmedia = {tweet: "", image: "largelogo.png", imageactive: "none", pos: "middleofeverything", tweethtml: "", scale: 100, scalepc: 100, lastVisibility: false, animate: "toggle", styling: "onLight"};
+                } else if ($scope.socialmedia.stored == "") {
+                $scope.socialmedia.stored = stored;
+            }
        }
         
         socket.on("socialmedia", function (msg) {
@@ -103,6 +104,14 @@ app.controller('socialmediaCGController', ['$scope', 'socket', 'localStorageServ
             $scope.socialmedia.lastVisibility = false;
             socket.emit('socialmedia', 'hide');
         };
+        
+        $scope.add = function(item) {
+            if (item.url) {
+                $scope.queuedTweets.push(item);
+                console.log($scope);
+            }
+        };
+
 
     }
 ]);

@@ -5,11 +5,14 @@
    <div class="ui grid">
        <div class="sixteen wide column">
 			<div class="fields">
-                <div class="ten wide field">
+                <div class="eight wide field">
                 	<label>Post URL </label>
 					<input id=socialUrl type="text" placeholder="Post URL (Twit, Insta, FB Etc)" ng-model="socialmedia.tweet">
 				</div>
-		
+		        <div class="two wide field">
+						<label>&nbsp;</label>
+						<div class="ui orange button" ng-click="add(socialmedia.tweet)" >Add</div>
+				</div>	
 				<div class="two wide field">
 						<label>&nbsp;</label>
 						<button id=resolve-tweet class="ui blue button">Preview </button>
@@ -106,6 +109,42 @@
 	</div>
 	<div class="four wide column center"> </div>  	
 	</div>
+	
+	<div class="ui segment" ng-repeat="tweet in queuedTweets">
+  <div class="ui grid">
+    <div class="six wide column">
+      <h2 class="left aligned ui header">
+          <i class="list layout icon"></i>
+          <div>{{tweet.url}}</div>
+    </h2>
+    </div>
+
+    <div class="two wide column">
+      
+    </div>
+
+    <div class="two wide column">
+
+    </div>
+
+    <div class="right aligned six wide column">
+      <div class="ui small buttons">
+        <div class="ui positive button" ng-click="show('left', third)" >Left</div>
+      </div>
+
+      <div class="ui small buttons">
+        <div class="ui negative button" ng-click="hideleft()" >Left</div>
+      </div>
+      <div class="ui icon red small button" ng-click='remove($index)'>
+        <i class="delete icon"></i>
+      </div>
+
+    </div>
+  </div>
+</div>
+	
+</div>
+	
 			
 		<script>
 		
