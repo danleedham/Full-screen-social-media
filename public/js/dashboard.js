@@ -90,7 +90,9 @@ app.controller('liveControlCGController', ['$scope', 'socket',
 
 app.controller('twitterCGController', ['$scope', 'socket', 'Twitter',
     function($scope, socket, Twitter) {
-        var client = new Twitter({
+
+        // Replace with your infos: https://apps.twitter.com/app/new
+        /* var client = new Twitter({
             consumer_key: '',
             consumer_secret: '',
             access_token_key: '',
@@ -102,22 +104,22 @@ app.controller('twitterCGController', ['$scope', 'socket', 'Twitter',
             if (!error) {
                 console.log(tweets);
             }
+        }); */
+
+        socket.on("twitterList", function (msg) {
+            $scope.twitterList = msg;
         });
 
-        socket.on("twitter", function (msg) {
-            $scope.twitter = msg;
-        });
-
-        $scope.$watch('twitter', function() {
-            if ($scope.twitter) {
-                socket.emit("twitter", $scope.twitter);
+        $scope.$watch('twitterList', function() {
+            if ($scope.twitterList) {
+                socket.emit("twitterList", $scope.twitterList);
             } else {
-                getTwitterData();
+                getTwitterListData();
             }
         }, true);
 
-        function getTwitterData() {
-            socket.emit("twitter:get");
+        function getTwitterListData() {
+            socket.emit("twitterList:get");
         }
 
     }
@@ -125,20 +127,20 @@ app.controller('twitterCGController', ['$scope', 'socket', 'Twitter',
 
 app.controller('instagramCGController', ['$scope', 'socket',
     function($scope, socket) {
-        socket.on("instagram", function (msg) {
-            $scope.instagram = msg;
+        socket.on("instagramList", function (msg) {
+            $scope.instagramList = msg;
         });
 
-        $scope.$watch('instagram', function() {
-            if ($scope.instagram) {
-                socket.emit("instagram", $scope.instagram);
+        $scope.$watch('instagramList', function() {
+            if ($scope.instagramList) {
+                socket.emit("instagramList", $scope.instagramList);
             } else {
-                getInstagramData();
+                getInstagramListData();
             }
         }, true);
 
-        function getInstagramData() {
-            socket.emit("instagram:get");
+        function getInstagramListData() {
+            socket.emit("instagramList:get");
         }
 
     }

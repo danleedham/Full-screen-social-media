@@ -5,6 +5,7 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var Twitter = require('twitter');
+const Instagram = require('node-instagram').default;
 
 
 var socialmedia = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};
