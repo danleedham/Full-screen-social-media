@@ -1,28 +1,22 @@
 var express 	= require('express'),
-	http 		= require('http'),
-	Stopwatch 	= require('./models/stopwatch');
+	http 		= require('http');
 
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+var Twitter = require('twitter');
+
 
 var socialmedia = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};
-var twittercollections = {};
+var twitterList = {};
+var instagramList = {};
 
-//Clock Functions
-var stopwatch = new Stopwatch();
-
-stopwatch.on('tick:stopwatch', function(time) {
-	io.sockets.emit("clock:tick", time);
-});
-
-
-
+// Do some connections wizardry
 io.on('connection', function(socket) {
 	console.log("Client Socket Connected");
 	
     /*
-	 * 		Social Media
+	 * 		Live Control
 	 */
 	socket.on("socialmedia", function(msg) {
         socialmedia = msg;
@@ -31,26 +25,37 @@ io.on('connection', function(socket) {
 
     socket.on("socialmedia:get", function(msg) {
         io.sockets.emit("socialmedia", socialmedia);
-    });
-    
-    /*
-	 * 		Twitter Collections
-	 */
-	socket.on("twittercollections", function(msg) {
-        twittercollections = msg;
-		io.sockets.emit("twittercollections", msg);
 	});
-
-    socket.on("twittercollections:get", function(msg) {
-        io.sockets.emit("twittercollections", twittercollections);
+	
+	/*
+	 * 		Twitter
+	 */
+	socket.on("twitterList", function(msg) {
+        twitter = msg;
+		io.sockets.emit("twitterList", msg);
+	});
+	
+    socket.on("twitterList:get", function(msg) {
+        io.sockets.emit("twitterList", twitterList);
+	});
+	
+	/*
+	 * 		Instagram
+	 */
+	socket.on("instagramList", function(msg) {
+        instagramList = msg;
+		io.sockets.emit("instagramList", msg);
+	});
+	
+    socket.on("instagramList:get", function(msg) {
+        io.sockets.emit("instagramList", instagramList);
     });
-
 
 });
 
 //Serve the puplic dir
 app.use(express.static(__dirname + "/public"));
 
-server.listen(3000);
-console.log("Now listening on port 3000. Go to http://127.0.0.1:3000/admin to control")
-console.log("run 'play 1-1 [html] http://127.0.0.1:3000' in CasparCG to start the graphics")
+server.listen(3002);
+console.log("Go to http://127.0.0.1:3002/admin to control the dashboard")
+console.log("Open http://127.0.0.1:3002 in another Chrome Window and smash it full screen")

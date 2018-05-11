@@ -1,4 +1,4 @@
-var app = angular.module('StarterApp', ['ngRoute', 'LocalStorageModule', 'angularify.semantic', 'socket-io']);
+var app = angular.module('StarterApp', ['ngRoute', 'LocalStorageModule', 'angularify.semantic', 'socket-io', 'Twitter']);
 
 app.controller('AppCtrl', ['$scope', '$location',
     function($scope, $location){
@@ -9,17 +9,24 @@ app.controller('AppCtrl', ['$scope', '$location',
         };
         
     	$scope.menu.push({
-            name: 'Social Media',
-            url: '/social-media',
+            name: 'Live Control',
+            url: '/live-control',
+            type: 'link',
+            icon: 'red circle',
+        });
+
+        $scope.menu.push({
+            name: 'Twitter Search',
+            url: '/twitter',
             type: 'link',
             icon: 'blue twitter',
         });
-		
-		$scope.menu.push({
-            name: 'Twitter Collections',
-            url: '/twitter-collections',
+
+        $scope.menu.push({
+            name: 'Instagram Search',
+            url: '/instagram',
             type: 'link',
-            icon: 'blue twitter',
+            icon: 'orange instagram',
         });
 
     }
@@ -30,23 +37,26 @@ app.controller('AppCtrl', ['$scope', '$location',
  */
 app.config(['$routeProvider', 'localStorageServiceProvider',
     function($routeProvider, localStorageServiceProvider) {
-        localStorageServiceProvider.setPrefix('la1tv');
+        localStorageServiceProvider.setPrefix('social-media');
 
         $routeProvider          
-            .when("/social-media", {
-                templateUrl: '/admin/templates/social-media.tmpl.html',
-                controller: 'socialmediaCGController'
+            .when("/live-control", {
+                templateUrl: '/admin/templates/live-control.tmpl.html',
+                controller: 'liveControlCGController'
             })
-			.when("/twitter-collections", {
-                templateUrl: '/admin/templates/tweet-collections.tmpl.html',
-                controller: 'twittercollectionsCGController'
+            .when("/twitter", {
+                templateUrl: '/admin/templates/twitter.tmpl.html',
+                controller: 'twitterCGController'
             })
-            .otherwise({redirectTo: '/social-media'});
+            .when("/instagram", {
+                templateUrl: '/admin/templates/instagram.tmpl.html',
+                controller: 'instagramCGController'
+            })
+            .otherwise({redirectTo: '/twitter'});
     }
 ]);
 
-
-app.controller('socialmediaCGController', ['$scope', 'socket',
+app.controller('liveControlCGController', ['$scope', 'socket',
     function($scope, socket) {
         socket.on("socialmedia", function (msg) {
             $scope.socialmedia = msg;
@@ -78,24 +88,58 @@ app.controller('socialmediaCGController', ['$scope', 'socket',
     }
 ]);
 
-app.controller('twittercollectionsCGController', ['$scope', 'socket',
-    function($scope, socket) {
-        socket.on("twittercollections", function (msg) {
-            $scope.twittercollections = msg;	
+app.controller('twitterCGController', ['$scope', 'socket', 'Twitter',
+    function($scope, socket, Twitter) {
+        var client = new Twitter({
+            consumer_key: '',
+            consumer_secret: '',
+            access_token_key: '',
+            access_token_secret: ''
         });
 
-        $scope.$watch('twittercollections', function() {
-            if ($scope.twittercollections) {
-                socket.emit("twittercollections", $scope.twittercollections);
+        var params = {screen_name: 'nodejs'};
+        client.get('statuses/user_timeline', params, function(error, tweets, response) {
+            if (!error) {
+                console.log(tweets);
+            }
+        });
+
+        socket.on("twitter", function (msg) {
+            $scope.twitter = msg;
+        });
+
+        $scope.$watch('twitter', function() {
+            if ($scope.twitter) {
+                socket.emit("twitter", $scope.twitter);
             } else {
-                getTwitterCollectionsData();
+                getTwitterData();
             }
         }, true);
 
-        function getTwitterCollectionsData() {
-            socket.emit("twittercollections:get");
+        function getTwitterData() {
+            socket.emit("twitter:get");
         }
 
     }
 ]);
 
+app.controller('instagramCGController', ['$scope', 'socket',
+    function($scope, socket) {
+        socket.on("instagram", function (msg) {
+            $scope.instagram = msg;
+        });
+
+        $scope.$watch('instagram', function() {
+            if ($scope.instagram) {
+                socket.emit("instagram", $scope.instagram);
+            } else {
+                getInstagramData();
+            }
+        }, true);
+
+        function getInstagramData() {
+            socket.emit("instagram:get");
+        }
+
+    }
+]);

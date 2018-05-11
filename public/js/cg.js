@@ -3,7 +3,7 @@ var app = angular.module('cgApp', ['ngAnimate', 'socket-io']);
 // Social Media Controller, as developed by Dan Leedham with help from the amazing Tom J
 // Initialise with the usual plus http for grabbing data from social media sites
 // SCE allows us to use Trust HTML for the data we get back from social media sites
-app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
+app.controller('liveControlCtrl', ['$scope', '$http', 'socket', '$sce',
     function($scope, $http, socket, $sce){
         var showTweet = false;
         socket.on("socialmedia", function (msg) {
@@ -18,9 +18,9 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
             }
         });
 
-// Now let's go get the html code from our provider
-// tweetUrl in the function is the text entered by the user in the backend
-// tweetUrl requires a full post/video url to work. References to 'tweet' usually mean post
+        // Now let's go get the html code from our provider
+        // tweetUrl in the function is the text entered by the user in the backend
+        // tweetUrl requires a full post/video url to work. References to 'tweet' usually mean post
 		var fetchTweetHTML = function (tweetUrl) {
           var config = {headers:  {
               'Accept': 'application/jsonp',
@@ -28,8 +28,8 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
             }
           };
           
-// Checks the user provided url, determines which oEmbed engine to use
-// For more oEmbed sites, add another else if        
+        // Checks the user provided url, determines which oEmbed engine to use
+        // For more oEmbed sites, add another else if        
          if (tweetUrl.indexOf('instagram.com') >= 0) {
                   oEmbedUrl = 'http://api.instagram.com/oembed?url=';
           } else if (tweetUrl.indexOf('facebook.com') >= 0) {
@@ -50,8 +50,8 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
 		else {
 			var suffix = "";
 		}
-// $http.jsonp goes gets the data from oEmbed
-          $http.jsonp(oEmbedUrl+tweetUrl+'&callback=JSON_CALLBACK'+suffix, config)
+        // $http.jsonp goes gets the data from oEmbed
+        $http.jsonp(oEmbedUrl+tweetUrl+'&callback=JSON_CALLBACK'+suffix, config)
             .success(function(data) {
                 $scope.tweetHTML = $sce.trustAsHtml(data.html);		// trustAsHtml stops the app adding '' around the html code
                 $scope.tweetAuthor = data.author_name;				// Not used yet, but could be handy

@@ -1,0 +1,22 @@
+<div class="ui form segment">
+	<h2>Twitter Search</h2>
+	<br />
+	<div class="ui grid">
+		<div class="ten wide field">
+			<input id=socialUrl type="text" placeholder="Post URL (Twit, Insta, FB Etc)" ng-model="twitter.searchText">
+		</div>
+		<div class="six wide field">
+			<dropdown title="Search By"  ng-model="twitter.searchBy">
+				<dropdown-group value="text">Text Search</dropdown-group>
+				<dropdown-group value="handle">Twitter Handle</dropdown-group>
+				<dropdown-group value="favorites">User's Favourites</dropdown-group>
+			  </dropdown>
+		</div>
+	</div>
+	<div>
+		<br />
+	</div>
+</div>
+
+
+   
