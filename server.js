@@ -3,10 +3,34 @@ var express 	= require('express'),
 
 var app = express();
 var server = http.createServer(app);
+var bodyParser = require('body-parser');
 var io = require('socket.io').listen(server);
-var Twitter = require('twitter');
-const Instagram = require('node-instagram').default;
 
+
+// Get the Twitter Module
+module.exports = require('./node_modules/twitter-node-client/lib/Twitter');
+
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
+var error = function (err, response, body) {
+    console.log('ERROR [%s]', JSON.stringify(err));
+};
+var success = function (data) {
+    console.log('Data [%s]', data);
+};
+
+// Personal Twitter Keys from https://apps.twitter.com/
+var config = {
+    "consumerKey": "",
+    "consumerSecret": "",
+    "accessToken": "",
+    "accessTokenSecret": ""
+};
+
+var twitter = new module.exports.Twitter(config);
 
 var socialmedia = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};
 var twitterList = {};
@@ -56,6 +80,26 @@ io.on('connection', function(socket) {
 
 //Serve the puplic dir
 app.use(express.static(__dirname + "/public"));
+
+//post to retrieve search data
+app.post('/twitter/search', function (req, res) {
+	console.log(req.body);
+	var searchText = req.body.searchText;
+	var filterRetweets = '-filter:retweets';
+	var filterImages ='+filter:images';
+	var resultType = req.body.searchBy;
+	var data = twitter.getSearch({ q: searchText+filterRetweets, 'count': 20, 'result\_type':resultType, 'lang':'en', 'include_entities':'true', 'tweet_mode':'extended'}, function(error, response, body){
+		res.status(404).send({
+			"error" : "Nothing Found"
+		});
+	}, function(data){
+		res.send({
+			result : {
+				"userData" : data
+			}
+		});
+	});
+});
 
 server.listen(3002);
 console.log("Go to http://127.0.0.1:3002/admin to control the dashboard")

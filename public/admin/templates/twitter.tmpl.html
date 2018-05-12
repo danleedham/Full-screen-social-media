@@ -1,22 +1,60 @@
-<div class="ui form segment">
-	<h2>Twitter Search</h2>
-	<br />
-	<div class="ui grid">
-		<div class="ten wide field">
-			<input id=socialUrl type="text" placeholder="Post URL (Twit, Insta, FB Etc)" ng-model="twitter.searchText">
-		</div>
-		<div class="six wide field">
-			<dropdown title="Search By"  ng-model="twitter.searchBy">
-				<dropdown-group value="text">Text Search</dropdown-group>
-				<dropdown-group value="handle">Twitter Handle</dropdown-group>
-				<dropdown-group value="favorites">User's Favourites</dropdown-group>
-			  </dropdown>
-		</div>
-	</div>
-	<div>
-		<br />
-	</div>
+<div class="ui form segment" style="padding-bottom: 48px;">
+  <h2>Twitter Search</h2>
+  <br />
+  <div class="ui grid">
+      <div class="ten wide field">
+        <input class="form-control" type="text" placeholder="Type your search then press enter..." ng-model="searchText" id="searchText" ng-keyup="$event.keyCode == 13 && getSearch(searchText,searchBy)">
+      </div>
+      <div class="four wide field">
+          <select ng-model="searchBy" class="ui dropdown">
+              <option value="recent" selected>Recent Tweets</option>
+              <option value="popular">Popular Tweets</option>
+              <option value="mixed">Mixed Tweets</option>
+          </select>
+      </div>
+      <div class="two wide field">
+          <div class="ui blue button" ng-click="getSearch(searchText,searchBy)">Search</div>
+      </div>
+  </div>
+  <div class="row" ng-if="twitterErrors" >
+    <div class="sixteen wide column">
+      <div class="alert alert-danger">
+        {{twitterErrors}}
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:25px;" ng-if="results" id="tweetList">
+    <div ng-repeat="result in results.statuses" class="ui grid tweetContent" ng-class-odd="'odd'">
+      <div class="userProfileImage two wide column">
+        <img ng-src={{result.user.profile_image_url_bigger}} class="userProfileImage">
+      </div>
+      <div class="user three wide column">
+        <div class="userName">
+          {{result.user.name}}
+        </div>
+        <div class="userHandle">
+          <a href="https://twitter.com/{{result.user.screen_name}}" target="_blank">@{{result.user.screen_name}} <span class="userVerified" ng-if="result.user.verified">&#10004;</span></a>
+        </div>
+        <div class="tweetDateTime">
+        {{result.created_at_JSDate | date: 'dd/MM/yy @ h:mma'}}
+        </div>
+      </div>     
+      <div class="text eight wide column">
+        {{result.full_text}}
+      </div>
+      <div class="saveButtons two wide column">
+        <div class="ui icon green button" ng-click="add(result.id_str)"> 
+          <i class="plus icon"></i>
+        </div>
+      </div>
+      <div class="row" ng-if="result.entities.media">
+        <div class="five wide column">
+        </div>
+      <div ng-repeat="media in result.entities.media" class="nine wide column">
+        <img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}">
+      </div>
+      <div class="two wide column">
+      </div>
+    </div>
+  </div>
 </div>
-
-
-   

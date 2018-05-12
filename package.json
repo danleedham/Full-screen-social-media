@@ -1,6 +1,7 @@
 {
-	"name": "la1tv-roses-graphics",
-	"version": "1.0.0",
+	"name": "full-screen-social-media",
+	"version": "1.0.1",
+	"author": "Dan Leedham",
 	"scripts": {
 		"start": "nodemon server.js"
 	},
@@ -9,7 +10,8 @@
 		"socket.io": "^1.7.3",
 		"underscore": "^1.8.3",
 		"nodemon": "^1.11.0",
-		"twitter": "^1.7.1",
-		"node-instagram": "^4.1.0"
-	}
+		"twitter-node-client": "*",
+        "body-parser": "^1.12.2",
+	},
+	"license": "MIT"
 }

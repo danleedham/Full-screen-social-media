@@ -1,3 +1,4 @@
+/* Backend Style */
 html, body {
     height: 100%;
     font-size: 15px;
@@ -24,4 +25,42 @@ html, body {
 .ui.form .fields .field,
 .ui.form .field {
     margin-bottom: 0px;
+}
+
+#tweetList .tweetContent{
+    padding-bottom: 12px;
+    padding-top: 12px;
+    border-top: solid 2px #e6e6e6;
+}
+
+#tweetList .userProfileImage img {
+    width: 75px;
+    height: 75px;
+}
+
+#tweetList .saveButtons{
+    text-align: right;
+    font-weight: bold;
+}
+
+#tweetList .user .userName{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#tweetList .user .userHandle {
+    color: #00aced;
+}
+
+#tweetList .user .userVerified {
+    color: #1dcaff;
+    font-size: 18px;
+}
+
+#tweetList .odd{
+    background-color: #f0f0f0;
+}
+
+#tweetList .even {
+    background-color: #fff;
 }

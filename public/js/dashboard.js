@@ -1,4 +1,4 @@
-var app = angular.module('StarterApp', ['ngRoute', 'LocalStorageModule', 'angularify.semantic', 'socket-io', 'Twitter']);
+var app = angular.module('StarterApp', ['ngRoute', 'LocalStorageModule', 'angularify.semantic', 'socket-io']);
 
 app.controller('AppCtrl', ['$scope', '$location',
     function($scope, $location){
@@ -46,13 +46,13 @@ app.config(['$routeProvider', 'localStorageServiceProvider',
             })
             .when("/twitter", {
                 templateUrl: '/admin/templates/twitter.tmpl.html',
-                controller: 'twitterCGController'
+                controller: 'newTwitterCGController'
             })
             .when("/instagram", {
                 templateUrl: '/admin/templates/instagram.tmpl.html',
                 controller: 'instagramCGController'
             })
-            .otherwise({redirectTo: '/twitter'});
+            .otherwise({redirectTo: '/live-control'});
     }
 ]);
 
@@ -88,43 +88,6 @@ app.controller('liveControlCGController', ['$scope', 'socket',
     }
 ]);
 
-app.controller('twitterCGController', ['$scope', 'socket', 'Twitter',
-    function($scope, socket, Twitter) {
-
-        // Replace with your infos: https://apps.twitter.com/app/new
-        /* var client = new Twitter({
-            consumer_key: '',
-            consumer_secret: '',
-            access_token_key: '',
-            access_token_secret: ''
-        });
-
-        var params = {screen_name: 'nodejs'};
-        client.get('statuses/user_timeline', params, function(error, tweets, response) {
-            if (!error) {
-                console.log(tweets);
-            }
-        }); */
-
-        socket.on("twitterList", function (msg) {
-            $scope.twitterList = msg;
-        });
-
-        $scope.$watch('twitterList', function() {
-            if ($scope.twitterList) {
-                socket.emit("twitterList", $scope.twitterList);
-            } else {
-                getTwitterListData();
-            }
-        }, true);
-
-        function getTwitterListData() {
-            socket.emit("twitterList:get");
-        }
-
-    }
-]);
-
 app.controller('instagramCGController', ['$scope', 'socket',
     function($scope, socket) {
         socket.on("instagramList", function (msg) {
@@ -145,3 +108,59 @@ app.controller('instagramCGController', ['$scope', 'socket',
 
     }
 ]);
+
+app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket',
+    function($scope, TwitterService, socket){
+    if($scope.searchBy == undefined){
+        $scope.searchBy = "recent";
+    }
+	$scope.getSearch = function(searchText,searchBy){
+		// console.log("Search string entered: ", searchText);
+		TwitterService.getSearch(searchText, searchBy)
+		    .then(function(data){
+		        $scope.twitterErrors = undefined;
+            $scope.results = JSON.parse(data.result.userData);
+            
+            for(i=0; i<$scope.results.statuses.length; i++){
+              // Let's fix us some dates so we can use them
+              $scope.results.statuses[i].created_at_JSDate = new Date($scope.results.statuses[i].created_at);
+              // Now get rid of any picture links as we'll be displaying those!
+              var pos = $scope.results.statuses[i].full_text.lastIndexOf("https://t.co/");
+              if(pos > -1){
+                $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.substring(0,pos);
+              }
+              // Split images
+                $scope.results.statuses[i].user.profile_image_url_bigger = $scope.results.statuses[i].user.profile_image_url.replace("normal","bigger");
+                $scope.results.statuses[i].user.profile_image_url_original = $scope.results.statuses[i].user.profile_image_url.replace("_normal","");
+              // Get rid of annoying &amps;
+              $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.replace(new RegExp('&amp;', 'g'), '&');
+
+            }
+            // console.log($scope.results);
+		    })
+		    .catch(function(error){
+		        console.error('there was an error retrieving data: ', error);
+		        $scope.twitterErrors = error.error;
+		    })
+        }
+ 
+    }
+]);
+
+app.factory('TwitterService', function($http, $q){
+  var getSearch = function(searchText,searchBy){
+    var d = $q.defer();
+    $http.post('/twitter/search', {searchText : searchText, searchBy : searchBy})
+      .success(function(data){
+        return d.resolve(data);
+      })
+      .error(function(error){
+        return d.reject(error);
+      });
+    return d.promise;
+  };
+
+  return {
+    getSearch : getSearch
+  }
+});
