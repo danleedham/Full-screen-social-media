@@ -12,8 +12,8 @@
               <option value="mixed">Mixed Tweets</option>
           </select>
       </div>
-      <div class="two wide field">
-          <div class="ui blue button" ng-click="getSearch(searchText,searchBy)">Search</div>
+      <div class="two wide field" style="text-align: right;">
+          <div class="ui blue button" style="width: 100%;" ng-click="getSearch(searchText,searchBy)">Search</div>
       </div>
   </div>
   <div class="row" ng-if="twitterErrors" >
@@ -24,26 +24,26 @@
     </div>
   </div>
   <div style="margin-top:25px;" ng-if="results" id="tweetList">
-    <div ng-repeat="result in results.statuses" class="ui grid tweetContent" ng-class-odd="'odd'">
-      <div class="userProfileImage two wide column">
-        <img ng-src={{result.user.profile_image_url_bigger}} class="userProfileImage">
-      </div>
-      <div class="user three wide column">
-        <div class="userName">
-          {{result.user.name}}
-        </div>
-        <div class="userHandle">
-          <a href="https://twitter.com/{{result.user.screen_name}}" target="_blank">@{{result.user.screen_name}} <span class="userVerified" ng-if="result.user.verified">&#10004;</span></a>
-        </div>
-        <div class="tweetDateTime">
-        {{result.created_at_JSDate | date: 'dd/MM/yy @ h:mma'}}
-        </div>
+    <div ng-repeat="result in results.statuses" class="ui grid tweetContent" ng-class-even="'odd'">
+        <div class="four wide column">
+          <img ng-src={{result.user.profile_image_url_bigger}} class="userProfileImage">
+          <div class="tweetDetails">
+            <div class="userName">
+              {{result.user.name}}
+            </div>
+            <div class="userHandle">
+              <a href="https://twitter.com/{{result.user.screen_name}}" target="_blank">@{{result.user.screen_name}} <span class="userVerified" ng-if="result.user.verified">&#10004;</span></a>
+            </div>
+            <div class="tweetDateTime">
+            {{result.created_at_JSDate | date: 'dd/MM/yy @ h:mma'}}
+            </div>
+          </div>
       </div>     
-      <div class="text eight wide column">
+      <div class="text nine wide column">
         {{result.full_text}}
       </div>
-      <div class="saveButtons two wide column">
-        <div class="ui icon green button" ng-click="add(result.id_str)"> 
+      <div class="saveButtons three wide column">
+        <div class="ui icon green button" ng-click="addToList(result)"> 
           <i class="plus icon"></i>
         </div>
       </div>

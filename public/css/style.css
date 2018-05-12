@@ -30,12 +30,18 @@ html, body {
 #tweetList .tweetContent{
     padding-bottom: 12px;
     padding-top: 12px;
-    border-top: solid 2px #e6e6e6;
+    border-bottom: solid 2px #e6e6e6;
 }
 
 #tweetList .userProfileImage img {
     width: 75px;
     height: 75px;
+    float: left;
+}
+
+#tweetList .tweetDetails{
+    float: right;
+    width: calc(100% - 87px);
 }
 
 #tweetList .saveButtons{

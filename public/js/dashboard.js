@@ -56,8 +56,15 @@ app.config(['$routeProvider', 'localStorageServiceProvider',
     }
 ]);
 
-app.controller('liveControlCGController', ['$scope', 'socket',
-    function($scope, socket) {
+app.controller('liveControlCGController', ['$scope', 'socket', 'localStorageService',
+    function($scope, socket, localStorageService) {
+        var stored = localStorageService.get('twitterList');
+        if(stored === null) {
+            $scope.twitterList = [];
+        } else {
+            $scope.twitterList = stored;
+        }
+        
         socket.on("socialmedia", function (msg) {
             $scope.socialmedia = msg;
             $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;	
@@ -109,41 +116,56 @@ app.controller('instagramCGController', ['$scope', 'socket',
     }
 ]);
 
-app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket',
-    function($scope, TwitterService, socket){
-    if($scope.searchBy == undefined){
-        $scope.searchBy = "recent";
-    }
-	$scope.getSearch = function(searchText,searchBy){
-		// console.log("Search string entered: ", searchText);
-		TwitterService.getSearch(searchText, searchBy)
-		    .then(function(data){
-		        $scope.twitterErrors = undefined;
-            $scope.results = JSON.parse(data.result.userData);
-            
-            for(i=0; i<$scope.results.statuses.length; i++){
-              // Let's fix us some dates so we can use them
-              $scope.results.statuses[i].created_at_JSDate = new Date($scope.results.statuses[i].created_at);
-              // Now get rid of any picture links as we'll be displaying those!
-              var pos = $scope.results.statuses[i].full_text.lastIndexOf("https://t.co/");
-              if(pos > -1){
-                $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.substring(0,pos);
-              }
-              // Split images
-                $scope.results.statuses[i].user.profile_image_url_bigger = $scope.results.statuses[i].user.profile_image_url.replace("normal","bigger");
-                $scope.results.statuses[i].user.profile_image_url_original = $scope.results.statuses[i].user.profile_image_url.replace("_normal","");
-              // Get rid of annoying &amps;
-              $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.replace(new RegExp('&amp;', 'g'), '&');
-
-            }
-            // console.log($scope.results);
-		    })
-		    .catch(function(error){
-		        console.error('there was an error retrieving data: ', error);
-		        $scope.twitterErrors = error.error;
-		    })
+app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 'localStorageService',
+    function($scope, TwitterService, socket, localStorageService){
+        var stored = localStorageService.get('twitterList');
+        if(stored === null) {
+            $scope.twitterList = [];
+        } else {
+            $scope.twitterList = stored;
         }
- 
+        
+        // Function for adding a particular tweet to the saved list
+        $scope.addToList = function(item) {
+            if (item.id_str && $scope.twitterList.includes(item) == false) {
+                $scope.twitterList.push(item);
+                return localStorageService.set('twitterList',$scope.twitterList); 
+            }
+        };
+
+        if($scope.searchBy == undefined){
+            $scope.searchBy = "recent";
+        }
+
+        $scope.getSearch = function(searchText,searchBy){
+            // console.log("Search string entered: ", searchText);
+            TwitterService.getSearch(searchText, searchBy)
+                .then(function(data){
+                    $scope.twitterErrors = undefined;
+                $scope.results = JSON.parse(data.result.userData);
+                
+                for(i=0; i<$scope.results.statuses.length; i++){
+                // Let's fix us some dates so we can use them
+                $scope.results.statuses[i].created_at_JSDate = new Date($scope.results.statuses[i].created_at);
+                // Now get rid of any picture links as we'll be displaying those!
+                var pos = $scope.results.statuses[i].full_text.lastIndexOf("https://t.co/");
+                if(pos > -1){
+                    $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.substring(0,pos);
+                }
+                // Split images
+                    $scope.results.statuses[i].user.profile_image_url_bigger = $scope.results.statuses[i].user.profile_image_url.replace("normal","bigger");
+                    $scope.results.statuses[i].user.profile_image_url_original = $scope.results.statuses[i].user.profile_image_url.replace("_normal","");
+                // Get rid of annoying &amps;
+                $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.replace(new RegExp('&amp;', 'g'), '&');
+
+                }
+                // console.log($scope.results);
+                })
+                .catch(function(error){
+                    console.error('there was an error retrieving data: ', error);
+                    $scope.twitterErrors = error.error;
+                })
+            }
     }
 ]);
 

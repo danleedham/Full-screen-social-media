@@ -88,53 +88,86 @@
   </div>							
 <br>
  <div class="ui divider"></div>
-
-    <br>
-    <div class="ui grid">
-    <div class="four wide column center"> </div>  
-	<div class="eight wide column center">
-        <div id=tweet_details></div>
-	</div>
-	<div class="four wide column center"> </div>  	
+ <div class="ui form segment">
+		<div ng-if="twitterList" id="tweetList">
+				<div ng-repeat="result in twitterList" class="ui grid tweetContent" ng-class-even="'odd'">
+					<div class="four wide column">
+						<img ng-src={{result.user.profile_image_url_bigger}} class="userProfileImage">
+						<div class="tweetDetails">
+							<div class="userName">
+								{{result.user.name}}
+							</div>
+							<div class="userHandle">
+								<a href="https://twitter.com/{{result.user.screen_name}}" target="_blank">@{{result.user.screen_name}} <span class="userVerified" ng-if="result.user.verified">&#10004;</span></a>
+							</div>
+							<div class="tweetDateTime">
+							{{result.created_at_JSDate | date: 'dd/MM/yy @ h:mma'}}
+							</div>
+						</div>
+					</div>     
+					<div class="text eight wide column">
+						{{result.full_text}}
+					</div>
+					<div class="saveButtons four wide column">
+							<div class="ui icon pink button" ng-click="removeFromList(result)"> 
+									Live
+								</div>							
+								<div class="ui icon orange button" ng-click="removeFromList(result)"> 
+										Hide
+									</div>
+						<div class="ui icon red button" ng-click="removeFromList(result)"> 
+							<i class="minus icon"></i>
+						</div>
+					</div>
+					<div class="row" ng-if="result.entities.media">
+						<div class="four wide column">
+						</div>
+					<div ng-repeat="media in result.entities.media" class="nine wide column">
+						<img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}">
+					</div>
+					<div class="two wide column">
+					</div>
+				</div>
+			</div>
 	</div>
 			
-		<script>
+<script>
+
+	$(document).ready(function() {
+		$("#resolve-tweet").click(function() {
+		var url = $("#socialUrl").val();
+		var caption = $("#socialCaption").val();		
 		
-			$(document).ready(function() {
-			  $("#resolve-tweet").click(function() {
-				var url = $("#socialUrl").val();
-				var caption = $("#socialCaption").val();		
-				
-				if (url.includes("instagram.com")) { 
-					oEmbedUrl = 'http://api.instagram.com/oembed?url=';
-				
-				} else if (url.includes("facebook.com")) {
-					 		if 	(url.includes("video")) {
-          							oEmbedUrl = 'https://www.facebook.com/plugins/video/oembed.json/?url='; 
-          					} else { 
-          							oEmbedUrl = 'https://www.facebook.com/plugins/post/oembed.json/?url=';
-          			 		}	
-          			 
-          			 
-          		} else { 
-          			oEmbedUrl = 'https://api.twitter.com/1/statuses/oembed.json?url=';
-          		}
-          			
-				if (url == "") {
-				  $(".controls").addClass("error");
-				} else {
-				  $("#tweet_div").show();
-				  $.ajax({
-					url: oEmbedUrl + url,
-					dataType: "jsonp",
-					success: function(data) {
-					  $('#tweet_details').html(data.html);
+		if (url.includes("instagram.com")) { 
+			oEmbedUrl = 'http://api.instagram.com/oembed?url=';
+		
+		} else if (url.includes("facebook.com")) {
+					if 	(url.includes("video")) {
+										oEmbedUrl = 'https://www.facebook.com/plugins/video/oembed.json/?url='; 
+								} else { 
+										oEmbedUrl = 'https://www.facebook.com/plugins/post/oembed.json/?url=';
+								}	
+							
+							
+					} else { 
+						oEmbedUrl = 'https://api.twitter.com/1/statuses/oembed.json?url=';
 					}
-				  });
-				}
-			  })
-			})
-	  </script>
+						
+		if (url == "") {
+			$(".controls").addClass("error");
+		} else {
+			$("#tweet_div").show();
+			$.ajax({
+			url: oEmbedUrl + url,
+			dataType: "jsonp",
+			success: function(data) {
+				$('#tweet_details').html(data.html);
+			}
+			});
+		}
+		})
+	})
+</script>
 
 
    
