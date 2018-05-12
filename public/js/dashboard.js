@@ -29,6 +29,13 @@ app.controller('AppCtrl', ['$scope', '$location',
             icon: 'orange instagram',
         });
 
+        $scope.menu.push({
+            name: 'Manual Embed',
+            url: '/manual',
+            type: 'link',
+            icon: 'black camera',
+        });
+
     }
 ]);
 
@@ -51,6 +58,10 @@ app.config(['$routeProvider', 'localStorageServiceProvider',
             .when("/instagram", {
                 templateUrl: '/admin/templates/instagram.tmpl.html',
                 controller: 'instagramCGController'
+            })
+            .when("/manual", {
+                templateUrl: '/admin/templates/manual.tmpl.html',
+                controller: 'manualCGController'
             })
             .otherwise({redirectTo: '/live-control'});
     }
@@ -166,6 +177,38 @@ app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 
                     $scope.twitterErrors = error.error;
                 })
             }
+    }
+]);
+
+app.controller('manualCGController', ['$scope', 'socket',
+    function($scope, socket) {
+        socket.on("manual", function (msg) {
+            $scope.manual = msg;
+            $scope.manual.scale = Number($scope.manual.scalepc) / 100;	
+            if($scope.manual.imageactive == "none"){
+                $scope.manual.imageactiveShow = false;
+            } else {
+                $scope.manual.imageactiveShow = true;
+            }
+            if($scope.manual.image == "none"){
+                $scope.manual.imageShow = false;
+            } else {
+                $scope.manual.imageShow = true;
+            }
+        });
+
+        $scope.$watch('manual', function() {
+            if ($scope.manual) {
+                socket.emit("manual", $scope.manual);
+            } else {
+                getmanualData();
+            }
+        }, true);
+
+        function getmanualData() {
+            socket.emit("manual:get");
+        }
+
     }
 ]);
 

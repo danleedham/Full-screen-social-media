@@ -35,6 +35,7 @@ var twitter = new module.exports.Twitter(config);
 var socialmedia = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};
 var twitterList = {};
 var instagramList = {};
+var manual = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};
 
 // Do some connections wizardry
 io.on('connection', function(socket) {
@@ -74,7 +75,19 @@ io.on('connection', function(socket) {
 	
     socket.on("instagramList:get", function(msg) {
         io.sockets.emit("instagramList", instagramList);
-    });
+	});
+	
+	/*
+	 * 		Manual Control
+	 */
+	socket.on("manual", function(msg) {
+        manual = msg;
+		io.sockets.emit("manual", msg);
+	});
+
+    socket.on("manual:get", function(msg) {
+        io.sockets.emit("manual", manual);
+	});
 
 });
 

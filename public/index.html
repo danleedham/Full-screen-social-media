@@ -14,13 +14,13 @@
     </head>
 
     <body>
-        <div ng-controller="liveControlCtrl">
-			<div class="backgroundimage" ng-class="socialmedia.styling">
-				<img ng-if="socialmedia.imageShow" ng-src="/images/{{socialmedia.image}}" ng-hide="socialmedia.show" ng-class="socialmedia.styling">
-				<img ng-if="socialmedia.imageactiveShow" ng-src="/images/{{socialmedia.imageactive}}" class="toggle" ng-show="socialmedia.show" ng-class="socialmedia.styling">
+        <div ng-controller="manualControlCtrl">
+			<div class="backgroundimage" ng-class="manual.styling">
+				<img ng-if="manual.imageShow" ng-src="/images/{{manual.image}}" ng-hide="manual.show" ng-class="manual.styling">
+				<img ng-if="manual.imageactiveShow" ng-src="/images/{{manual.imageactive}}" class="toggle" ng-show="manual.show" ng-class="manual.styling">
 			</div> 
-			<div id="socialmedia" my-directive class="{{socialmedia.pos}} social-media">
-				<div ng-bind-html="tweetHTML" class="{{socialmedia.animate}} tweetcontent" style="-webkit-transform:scale({{socialmedia.scale}}); -webkit-transform-origin: {{socialmedia.pos}}" ng-show="socialmedia.show"></div>
+			<div id="manual" my-directive class="{{manual.pos}} social-media">
+				<div ng-bind-html="tweetHTML" class="{{manual.animate}} tweetcontent" style="-webkit-transform:scale({{manual.scale}}); -webkit-transform-origin: {{manual.pos}}" ng-show="manual.show"></div>
 			</div>
         </div>
 
