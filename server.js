@@ -24,10 +24,10 @@ var success = function (data) {
 
 // Personal Twitter Keys from https://apps.twitter.com/
 var config = {
-    "consumerKey": "YrkPNxjiWhKSEomrw7B1V5wnn",
-    "consumerSecret": "WZO2NwKSvczl5MwI9mlZR0YMA0CxDc2wDxw7lOrUMR1otivgXU",
-    "accessToken": "19205970-fvGp0zXQRIOBvy8UW9DNXzeaq8XKXcsMya5p4J9Am",
-    "accessTokenSecret": "gwXyBm5LBNfJ8nTfYpF7uz1JPTNVLfPQwdGBB9WTlpbb9"
+    "consumerKey": "",
+    "consumerSecret": "",
+    "accessToken": "",
+    "accessTokenSecret": ""
 };
 
 var twitter = new module.exports.Twitter(config);
