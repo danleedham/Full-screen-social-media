@@ -13,7 +13,8 @@
           </select>
       </div>
       <div class="two wide field" style="text-align: right;">
-          <div class="ui blue button" style="width: 100%;" ng-click="getSearch(searchText,searchBy)">Search</div>
+          <div ng-if="!results" class="ui blue button" style="width: 100%;" ng-click="getSearch(searchText,searchBy)">Search</div>
+          <div ng-if="results" class="ui red button"  style="width: 100%;" ng-click="clearCurrentSearch()">Clear</div>
       </div>
   </div>
   <div class="row" ng-if="twitterErrors" >

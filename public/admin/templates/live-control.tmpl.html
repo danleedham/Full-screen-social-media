@@ -57,14 +57,14 @@
 							</div>
 						</div>
 					</div>     
-					<div class="text eight wide column">
+					<div class="text nine wide column">
 						{{result.full_text}}
 					</div>
-					<div class="saveButtons four wide column">
-							<div class="ui icon pink button" ng-click="removeFromList(result)"> 
+					<div class="saveButtons three wide column">
+								<div class="ui icon pink button" ng-click="makeLive(result)"> 
 									Live
 								</div>							
-								<div class="ui icon orange button" ng-click="removeFromList(result)"> 
+								<div class="ui icon orange button" ng-click="hideLive(result)"> 
 										Hide
 									</div>
 						<div class="ui icon red button" ng-click="removeFromList(result)"> 
@@ -77,7 +77,7 @@
 					<div ng-repeat="media in result.entities.media" class="nine wide column">
 						<img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}">
 					</div>
-					<div class="two wide column">
+					<div class="three wide column">
 					</div>
 				</div>
 			</div>

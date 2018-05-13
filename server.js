@@ -24,10 +24,10 @@ var success = function (data) {
 
 // Personal Twitter Keys from https://apps.twitter.com/
 var config = {
-    "consumerKey": "",
-    "consumerSecret": "",
-    "accessToken": "",
-    "accessTokenSecret": ""
+    "consumerKey": "YrkPNxjiWhKSEomrw7B1V5wnn",
+    "consumerSecret": "WZO2NwKSvczl5MwI9mlZR0YMA0CxDc2wDxw7lOrUMR1otivgXU",
+    "accessToken": "19205970-fvGp0zXQRIOBvy8UW9DNXzeaq8XKXcsMya5p4J9Am",
+    "accessTokenSecret": "gwXyBm5LBNfJ8nTfYpF7uz1JPTNVLfPQwdGBB9WTlpbb9"
 };
 
 var twitter = new module.exports.Twitter(config);
@@ -103,7 +103,7 @@ app.post('/twitter/search', function (req, res) {
 	var resultType = req.body.searchBy;
 	var data = twitter.getSearch({ q: searchText+filterRetweets, 'count': 20, 'result\_type':resultType, 'lang':'en', 'include_entities':'true', 'tweet_mode':'extended'}, function(error, response, body){
 		res.status(404).send({
-			"error" : "Nothing Found"
+			"error" : "Nothing Found. Probably not authorised"
 		});
 	}, function(data){
 		res.send({
