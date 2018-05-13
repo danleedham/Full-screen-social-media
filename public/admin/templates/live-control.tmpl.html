@@ -40,7 +40,7 @@
 						</div>
  		</div>
 	<br>
- 	<div class="ui form segment">
+ 	<div class="ui form segment" ng-if="twitterList">
 		<div ng-if="twitterList" id="tweetList">
 				<div ng-repeat="result in twitterList" class="ui grid tweetContent" ng-class-even="'odd'">
 					<div class="four wide column">
@@ -81,6 +81,11 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div><!-- List of Tweets ui form segment-->
+	<div ng-if="twitterList" class="sixteen wide column">
+			<div class="ui red button"  style="width: 100%;" ng-click="clearTwitterList()">Clear All Favorites</div>
 	</div>
+</div><!-- Main page ui form segment-->
 
    

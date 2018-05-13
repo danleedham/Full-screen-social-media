@@ -71,7 +71,6 @@ app.controller('liveControlCGController', ['$scope', 'socket', 'localStorageServ
     function($scope, socket, localStorageService) {
         var stored = localStorageService.get('twitterList');
         if(stored === null) {
-            $scope.twitterList = [];
         } else {
             $scope.twitterList = stored;
         }
@@ -90,6 +89,11 @@ app.controller('liveControlCGController', ['$scope', 'socket', 'localStorageServ
                 $scope.socialmedia.imageShow = true;
             }
         });
+
+        $scope.clearTwitterList = function(){
+            $scope.twitterList = undefined;
+            return localStorageService.remove('twitterList'); 
+        }
 
         $scope.$watch('socialmedia', function() {
             if ($scope.socialmedia) {
@@ -157,7 +161,7 @@ app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 
 
         // Function for clearning the search results
         $scope.clearCurrentSearch = function(){
-            console.log("Clearing Results");
+            // console.log("Clearing Results");
             $scope.results = undefined;
             return localStorageService.set('currentSearch',[]); 
         }
