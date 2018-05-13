@@ -163,7 +163,7 @@ app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 
         $scope.clearCurrentSearch = function(){
             // console.log("Clearing Results");
             $scope.results = undefined;
-            return localStorageService.set('currentSearch',[]); 
+            return localStorageService.remove('currentSearch'); 
         }
 
 
