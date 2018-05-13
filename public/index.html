@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         	<title>CG</title>
         <link rel="stylesheet" href="/css/reset.css" />
-        <link href="/css/fonts/mreavesxl.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
         <link href="/css/theme.css" rel="stylesheet" type="text/css">
         <link href="/css/animation.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="/js/socket.io.js"></script>
@@ -14,11 +14,38 @@
     </head>
 
     <body>
+        
+        <div ng-controller="liveControlCtrl">
+            <div ng-if="socialmedia.background =='greenScreen'" class="backgroundimage greenScreen">
+            </div>
+            <div ng-if="socialmedia.background == 'fullImage'" class="backgroundimage">
+                <img ng-if="socialmedia.imageShow" ng-src="/images/background.png">
+            </div>
+            <div id="tweetElement" ng-class="socialmedia.design"> <!-- ng-show="socialmedia.show" -->
+                <div class="tweetHeader">
+                    <div class="tweetProfileImage">
+                        <img class="profileImage" src="https://pbs.twimg.com/profile_images/984827746600869889/E4McMdAp_bigger.jpg">
+                    </div>
+                    <div class="tweetAuthor">
+                        <div class="tweetName">
+                            Nicky Morgan MP <div class="tweetVerified"></div>
+                            </div>
+                        <div class="tweetHandle">
+                            @NickyMorgan01
+                        </div>
+                    </div>
+                </div>
+                <div class="tweetText">
+                    Pretty sure the Stroll family have enough money to buy a new camera lense. After all, it bought Stroll his seat at Williams... #F1Barcelona #SpanishGP #F1 #SkyF1
+                </div>
+                <div class="tweetMedia">
+                </div>
+                <div class="tweetTwitterLogo">
+                </div>
+            </div>
+        </div>
+        
         <div ng-controller="manualControlCtrl">
-			<div class="backgroundimage" ng-class="manual.styling">
-				<img ng-if="manual.imageShow" ng-src="/images/{{manual.image}}" ng-hide="manual.show" ng-class="manual.styling">
-				<img ng-if="manual.imageactiveShow" ng-src="/images/{{manual.imageactive}}" class="toggle" ng-show="manual.show" ng-class="manual.styling">
-			</div> 
 			<div id="manual" my-directive class="{{manual.pos}} social-media">
 				<div ng-bind-html="tweetHTML" class="{{manual.animate}} tweetcontent" style="-webkit-transform:scale({{manual.scale}}); -webkit-transform-origin: {{manual.pos}}" ng-show="manual.show"></div>
 			</div>

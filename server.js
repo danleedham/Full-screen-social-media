@@ -32,7 +32,7 @@ var config = {
 
 var twitter = new module.exports.Twitter(config);
 
-var socialmedia = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};
+var socialmedia = {pos: "middleofeverything", design: "defaultDesign", animate: "toggle", background: "fullImage"};
 var twitterList = {};
 var instagramList = {};
 var manual = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};

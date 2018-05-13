@@ -1,43 +1,46 @@
 <div class="ui form segment">
   <h2>Live Control</h2>
    <div class="ui grid">
-       <div class="sixteen wide column">
-       		<div class="fields">
-       			<div class="four field">
-						<label>Tweet Location </label>
-						 <dropdown title="Tweet Location"  ng-model="socialmedia.pos">
-							<dropdown-group>bottom left</dropdown-group>
-							<dropdown-group>bottom right</dropdown-group>
-							<dropdown-group>bottom center</dropdown-group>
-							<dropdown-group>top center</dropdown-group>
-							<dropdown-group>middleofeverything</dropdown-group>
-						  </dropdown>
+			<div class="four wide column">
+				<label>Default Position</label>
+				<select ng-model="socialmedia.pos" class="ui dropdown">
+						<option value="middleofeverything" selected>Centered</option>
+						<option value="bottom left">Bottom Left</option>
+						<option value="bottom right">Bottom Right</option>
+						<option value="bottom center">Bottom Center</option>
+						<option value="top center">Top Center</option>
+				</select>
+			</div>
+			<div class="four wide column">
+				<label>Overall Design</label>
+				<select ng-model="socialmedia.design" class="ui dropdown">
+						<option value="defaultDesign" selected>Default Design</option>
+						<option value="lowerThirdDesign">Lower Third Design</option>
+						<option value="bigImageDesign">Big Image Design Profile Fallback</option>
+						<option value="bigMediaDesign">Big Image Design No Fallback</option>
+				</select>
+			</div>
+			<div class="four wide column">
+				<label>Animation</label>
+				<select ng-model="socialmedia.animate" class="ui dropdown">
+						<option value="toggle" selected>Toggle</option>
+						<option value="bouncy-slide-top">Bouncy Slide Top</option>
+						<option value="slide-down">Slide Down</option>
+						<option value="bouncy-slide-down">Bouncy Slide Down</option>
+						<option value="spin-toggle">Spin Toggle</option>
+					</select>
 				</div>
-				<div class="four field">
-						<label>Overall Design</label>
-						 <dropdown title="Holding BG Image"  ng-model="socialmedia.image">
-							<dropdown-group>largelogo.png</dropdown-group>
-							<dropdown-group>topleftlogo.png</dropdown-group>
-							<dropdown-group>toprightlogo.png</dropdown-group>
-							<dropdown-group>none</dropdown-group>
-						  </dropdown>
-				</div>
-				<div class="four field">
-						<label>Animation</label>
-						 <dropdown title="Animation Type"  ng-model="socialmedia.animate">
-							<dropdown-group>bouncy-slide-top</dropdown-group>
-							<dropdown-group>toggle</dropdown-group>
-							<dropdown-group>slide-down</dropdown-group>
-							<dropdown-group>bouncy-slide-down</dropdown-group>
-							<dropdown-group>spin-toggle</dropdown-group>
-							<dropdown-group>rotate-in</dropdown-group>
-						  </dropdown>
-				</div>
- 			</div>
+				<div class="four wide column">
+						<label>Window Background</label>
+						<select ng-model="socialmedia.background" class="ui dropdown">
+								<option value="fullImage" selected>fullImage</option>
+								<option value="greenScreen">Chroma Green (#00ff00)</option>
+								<option value="transparent">Transparent</option>
+							</select>
+						</div>
  		</div>
-  </div>
-<br>
- <div class="ui form segment">
+	<br>
+ 	<div class="ui form segment">
 		<div ng-if="twitterList" id="tweetList">
 				<div ng-repeat="result in twitterList" class="ui grid tweetContent" ng-class-even="'odd'">
 					<div class="four wide column">

@@ -24,68 +24,43 @@
        <div class="sixteen wide column">
        		<div class="fields">
        			<div class="four field">
-						<label>Tweet Location </label>
-						 <dropdown title="Tweet Location"  ng-model="manual.pos">
-							<dropdown-group>bottom left</dropdown-group>
-							<dropdown-group>bottom right</dropdown-group>
-							<dropdown-group>bottom center</dropdown-group>
-							<dropdown-group>top center</dropdown-group>
-							<dropdown-group>middleofeverything</dropdown-group>
-						  </dropdown>
+					<label>Tweet Location </label>
+					<dropdown title="Tweet Location"  ng-model="manual.pos">
+					<dropdown-group>middleofeverything</dropdown-group>		
+					<dropdown-group>bottom left</dropdown-group>
+					<dropdown-group>bottom right</dropdown-group>
+					<dropdown-group>bottom center</dropdown-group>
+					<dropdown-group>top left</dropdown-group>
+					<dropdown-group>top right</dropdown-group>
+					<dropdown-group>top center</dropdown-group>
+					</dropdown>
 				</div>
 				<div class="four field">
-						<label>Background Image</label>
-						 <dropdown title="Holding BG Image"  ng-model="manual.image">
-							<dropdown-group>largelogo.png</dropdown-group>
-							<dropdown-group>topleftlogo.png</dropdown-group>
-							<dropdown-group>toprightlogo.png</dropdown-group>
-							<dropdown-group>none</dropdown-group>
-						  </dropdown>
+					<label>Animation</label>
+					<dropdown title="Animation Type"  ng-model="manual.animate">
+					<dropdown-group>bouncy-slide-top</dropdown-group>
+					<dropdown-group>toggle</dropdown-group>
+					<dropdown-group>slide-down</dropdown-group>
+					<dropdown-group>bouncy-slide-down</dropdown-group>
+					<dropdown-group>spin-toggle</dropdown-group>
+					<dropdown-group>rotate-in</dropdown-group>
+					</dropdown>
 				</div>
-					<div class="four field">
-						<label>Active Background Image</label>
-						 <dropdown title="Active BG Image"  ng-model="manual.imageactive">
-							<dropdown-group>blurredlogo.png</dropdown-group>
-							<dropdown-group>topleftlogo.png</dropdown-group>
-							<dropdown-group>toprightlogo.png</dropdown-group>
-							<dropdown-group>none</dropdown-group>
-						  </dropdown>
-				</div>
-				<div class="four field">
-						<label>Animation</label>
-						 <dropdown title="Animation Type"  ng-model="manual.animate">
-							<dropdown-group>bouncy-slide-top</dropdown-group>
-							<dropdown-group>toggle</dropdown-group>
-							<dropdown-group>slide-down</dropdown-group>
-							<dropdown-group>bouncy-slide-down</dropdown-group>
-							<dropdown-group>spin-toggle</dropdown-group>
-							<dropdown-group>rotate-in</dropdown-group>
-						  </dropdown>
+				<div class="four wide field">
+					<label>Scale Override (%)</label>
+					<input type="number" placeholder="Scale Override" ng-model="manual.scalepc">	
+					<button class="ui red button" ng-click="manual.scalepc = 100">
+						<i class="ban icon"></i>Reset
+					</button>
+				</div>	
+				<div class="four wide field">
+					<label>Simplify Output</label>
+					<checkbox ng-model="manual.hidemedia" size="large" type="toggle"></checkbox>
 				</div>
  			</div>
  		</div>
   </div>
-  
-    <div class="ui grid">
-        <div class="four wide field">
-            <label>Scale Override (%)</label>
-            <input type="number" placeholder="Scale Override" ng-model="manual.scalepc">	
-            <button class="ui red button" ng-click="manual.scalepc = 100">
-                <i class="ban icon"></i>Reset
-            </button>
-        </div>	
-        <div class="four wide field">
-            <label>Simplify Output</label>
-            <checkbox ng-model="manual.hidemedia" size="large" type="toggle"></checkbox>
-        </div>
-        <div class="four field">
-                <label>Styling</label>
-                 <dropdown title="Style Type"  ng-model="manual.styling">
-                    <dropdown-group>onLight</dropdown-group>
-                    <dropdown-group>onDark</dropdown-group>
-                  </dropdown>
-        </div>
-  </div>							
+							
 <br>
  
 <script>
