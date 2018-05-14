@@ -20,6 +20,7 @@ app.controller('liveControlCtrl', ['$scope', '$http', 'socket',
         // Twitter Top Tweet contains the tweet content of the current top/live tweet      			
         socket.on("twitterTopTweet", function (msg) {
             $scope.twitterTopTweet = msg;
+            console.log(msg);
         });
 
         $scope.$watch('twitterTopTweet', function() {

@@ -84,8 +84,6 @@ io.on('connection', function(socket) {
     socket.on("twitterTopTweet:get", function(msg) {
         io.sockets.emit("twitterTopTweet", twitterTopTweet);
 	});
-
-
 	
 	/*
 	 * 		Instagram
@@ -123,10 +121,16 @@ app.post('/twitter/search', function (req, res) {
 	var resultType = req.body.searchBy;
 	var searchMedia = req.body.searchMedia;
 	var filterRetweets = '-filter:retweets';
-	var filterIncludeImages ='+filter:images';
-	var filterIncludeMedia = '+filter:media';
-	var filterExcludeMedia = '-filter:media';
-	var data = twitter.getSearch({ q: searchText+filterRetweets, 'count': 20, 'result\_type':resultType, 'lang':'en', 'include_entities':'true', 'tweet_mode':'extended'}, function(error, response, body){
+	if(req.body.searchMedia == "searchOnlyImages"){
+		var filterImages = '+filter:images';
+	} else if (req.body.searchMedia == "searchOnlyMedia"){
+		var filterImages = '+filter:media';
+	} else if (req.body.searchMedia == "searchExcludeMedia") {
+		var filterImages = '-filter:media';
+	} else {
+		var filterImages = "";
+	}
+	var data = twitter.getSearch({ q: searchText+filterRetweets+filterImages, 'count': 20, 'result\_type':resultType, 'lang':'en', 'include_entities':'true', 'tweet_mode':'extended'}, function(error, response, body){
 		res.status(404).send({
 			"error" : "Nothing Found. Probably not authorised"
 		});
