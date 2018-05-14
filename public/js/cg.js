@@ -1,11 +1,8 @@
 var app = angular.module('cgApp', ['ngAnimate', 'socket-io']);
 
-// Social Media Controller, as developed by Dan Leedham with help from the amazing Tom J
-// Initialise with the usual plus http for grabbing data from social media sites
-// SCE allows us to use Trust HTML for the data we get back from social media sites
-app.controller('liveControlCtrl', ['$scope', '$http', 'socket', '$sce',
-    function($scope, $http, socket, $sce){
-        var showTweet = false;
+app.controller('liveControlCtrl', ['$scope', '$http', 'socket',
+    function($scope, $http, socket){
+        // Social Media contains most of the general settings
         socket.on("socialmedia", function (msg) {
             $scope.socialmedia = msg;
         });
@@ -19,6 +16,22 @@ app.controller('liveControlCtrl', ['$scope', '$http', 'socket', '$sce',
         function getSocialMediaData() {
             socket.emit("socialmedia:get");
         }
+
+        // Twitter Top Tweet contains the tweet content of the current top/live tweet      			
+        socket.on("twitterTopTweet", function (msg) {
+            $scope.twitterTopTweet = msg;
+        });
+
+        $scope.$watch('twitterTopTweet', function() {
+            if (!$scope.twitterTopTweet) {
+                getTwitterTopTweetData();
+            }
+        }, true);
+
+        function getTwitterTopTweetData() {
+            socket.emit("twitterTopTweet:get");
+        }
+
     }
 
 ]);

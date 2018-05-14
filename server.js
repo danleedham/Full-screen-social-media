@@ -24,16 +24,18 @@ var success = function (data) {
 
 // Personal Twitter Keys from https://apps.twitter.com/
 var config = {
-    "consumerKey": "",
-    "consumerSecret": "",
-    "accessToken": "",
-    "accessTokenSecret": ""
+    "consumerKey": "elUWzXIeAZUXNLm5YabeeJPhh",
+    "consumerSecret": "B2NOVWTixhN9HxKxqLxqwXlL03ceGHGqFtnI0ej19ed22kYcLA",
+    "accessToken": "19205970-wjxbaMzM67PJog5FpIMOWhZpKlQ4TzlT4w4MXC2TP",
+    "accessTokenSecret": "zk7ssAMIMbvYrmh2JvipRSjLV03jtr090QvKwZOdSL4Zo"
 };
 
 var twitter = new module.exports.Twitter(config);
 
-var socialmedia = {pos: "middleofeverything", design: "defaultDesign", animate: "toggle", background: "fullImage"};
+var socialmedia = {pos: "bottomLeft", design: "defaultDesign", animate: "toggle", background: "fullImage", tweetLive: false};
 var twitterList = {};
+var twitterOptions = {searchText: "", searchBy: "popular", searchMedia: "all"};
+var twitterTopTweet = {};
 var instagramList = {};
 var manual = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};
 
@@ -57,13 +59,33 @@ io.on('connection', function(socket) {
 	 * 		Twitter
 	 */
 	socket.on("twitterList", function(msg) {
-        twitter = msg;
+        twitterList = msg;
 		io.sockets.emit("twitterList", msg);
 	});
 	
     socket.on("twitterList:get", function(msg) {
         io.sockets.emit("twitterList", twitterList);
 	});
+
+	socket.on("twitterOptions", function(msg) {
+		twitterOptions = msg;
+		io.sockets.emit("twitterOptions", msg);
+	});
+	
+    socket.on("twitterOptions:get", function(msg) {
+        io.sockets.emit("twitterOptions", twitterOptions);
+	});
+
+	socket.on("twitterTopTweet", function(msg) {
+		twitterTopTweet = msg;
+		io.sockets.emit("twitterTopTweet", msg);
+	});
+	
+    socket.on("twitterTopTweet:get", function(msg) {
+        io.sockets.emit("twitterTopTweet", twitterTopTweet);
+	});
+
+
 	
 	/*
 	 * 		Instagram
@@ -98,9 +120,12 @@ app.use(express.static(__dirname + "/public"));
 app.post('/twitter/search', function (req, res) {
 	console.log(req.body);
 	var searchText = req.body.searchText;
-	var filterRetweets = '-filter:retweets';
-	var filterImages ='+filter:images';
 	var resultType = req.body.searchBy;
+	var searchMedia = req.body.searchMedia;
+	var filterRetweets = '-filter:retweets';
+	var filterIncludeImages ='+filter:images';
+	var filterIncludeMedia = '+filter:media';
+	var filterExcludeMedia = '-filter:media';
 	var data = twitter.getSearch({ q: searchText+filterRetweets, 'count': 20, 'result\_type':resultType, 'lang':'en', 'include_entities':'true', 'tweet_mode':'extended'}, function(error, response, body){
 		res.status(404).send({
 			"error" : "Nothing Found. Probably not authorised"

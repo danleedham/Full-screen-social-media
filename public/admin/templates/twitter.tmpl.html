@@ -2,18 +2,27 @@
   <h2>Twitter Search</h2>
   <br />
   <div class="ui grid">
-      <div class="ten wide field">
-        <input class="form-control" type="text" placeholder="Type your search then press enter..." ng-model="searchText" id="searchText" ng-keyup="$event.keyCode == 13 && getSearch(searchText,searchBy)">
+      <div class="eight wide field">
+        <input class="form-control" type="text" placeholder="Type your search then press enter..." ng-model="twitterOptions.searchText" id="searchText" ng-keyup="$event.keyCode == 13 && getSearch(twitterOptions.searchText,twitterOptions.searchBy,twitterOptions.searchMedia)">
       </div>
-      <div class="four wide field">
-          <select ng-model="searchBy" class="ui dropdown">
-              <option value="recent" selected>Recent Tweets</option>
-              <option value="popular">Popular Tweets</option>
-              <option value="mixed">Mixed Tweets</option>
-          </select>
+      <div class="three wide field">
+        <select ng-model="twitterOptions.searchBy" class="ui dropdown">
+            <option value="recent" selected>Recent Tweets</option>
+            <option value="popular">Popular Tweets</option>
+            <option value="mixed">Mixed Tweets</option>
+            <option value="author" selected>Author's Tweets</option>
+        </select>
+      </div>
+      <div class="three wide field">
+        <select ng-model="twitterOptions.searchMedia" class="ui dropdown">
+            <option value="all" selected>Include Media</option>
+            <option value="searchOnlyMedia">Media Only</option>
+            <option value="searchOnlyImages">Images Only</option>
+            <option value="searchExcludeMedia">Exclude Media</option>
+        </select>
       </div>
       <div class="two wide field" style="text-align: right;">
-          <div ng-if="!results" class="ui blue button" style="width: 100%;" ng-click="getSearch(searchText,searchBy)">Search</div>
+          <div ng-if="!results" class="ui blue button" style="width: 100%;" ng-click="getSearch(twitterOptions.searchText,twitterOptions.searchBy,twitterOptions.searchMedia)">Search</div>
           <div ng-if="results" class="ui red button"  style="width: 100%;" ng-click="clearCurrentSearch()">Clear</div>
       </div>
   </div>
@@ -33,7 +42,7 @@
               {{result.user.name}}
             </div>
             <div class="userHandle">
-              <a href="https://twitter.com/{{result.user.screen_name}}" target="_blank">@{{result.user.screen_name}} <span class="userVerified" ng-if="result.user.verified">&#10004;</span></a>
+              <a href="https://twitter.com/{{result.user.screen_name}}" target="_blank">@{{result.user.screen_name}} <div class="tweetVerified" ng-if="result.user.verified"></div></a>
             </div>
             <div class="tweetDateTime">
             {{result.created_at_JSDate | date: 'dd/MM/yy @ h:mma'}}
@@ -44,15 +53,18 @@
         {{result.full_text}}
       </div>
       <div class="saveButtons three wide column">
-        <div class="ui icon green button" ng-click="addToList(result)"> 
-          <i class="plus icon"></i>
+        <div class="ui icon yellow button" ng-click="addToList(result)"> 
+          <i class="star icon"></i>
         </div>
+        <div class="ui icon black button" ng-click="makeNextOnAir(result)">
+            <i class="star icon"></i>
+          </div>
       </div>
       <div class="row" ng-if="result.entities.media">
         <div class="five wide column">
         </div>
       <div ng-repeat="media in result.entities.media" class="nine wide column">
-        <img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}">
+        <img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}" class="tweetMedia">
       </div>
       <div class="two wide column">
       </div>

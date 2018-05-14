@@ -69,12 +69,55 @@ app.config(['$routeProvider', 'localStorageServiceProvider',
 
 app.controller('liveControlCGController', ['$scope', 'socket', 'localStorageService',
     function($scope, socket, localStorageService) {
+        // Let's go get stuff from the memory        
         var stored = localStorageService.get('twitterList');
         if(stored === null) {
         } else {
             $scope.twitterList = stored;
         }
+
+        var currentLiveTweet = localStorageService.get('currentLiveTweet');
+        if(currentLiveTweet === null) {
+        } else {
+            $scope.currentLiveTweet = currentLiveTweet;
+        }
+
+        var twitterTopTweet = localStorageService.get('twitterTopTweet');
+        if(twitterTopTweet === null) {
+        } else {
+            $scope.twitterTopTweet = twitterTopTweet;
+        }
         
+        $scope.clearTwitterList = function(){
+            $scope.twitterList = undefined;
+            return localStorageService.remove('twitterList'); 
+        }
+
+        $scope.removeFromList = function($index){
+            $scope.twitterList.splice($index,1);
+            // Update local storage with remaining favs
+            return localStorageService.set('twitterList',$scope.twitterList);
+        }
+
+        $scope.putTweetLive = function(){
+            $scope.socialmedia.tweetLive = true;
+        }
+
+        $scope.hideLiveTweet = function(){
+            $scope.socialmedia.tweetLive = false;
+        }
+
+        $scope.makeNextOnAir = function($index){
+            $scope.twitterTopTweet = $scope.twitterList[$index];
+            return localStorageService.set('twitterTopTweet',$scope.twitterTopTweet);
+        }
+
+        $scope.$watch('twitterTopTweet', function() {
+            if ($scope.twitterTopTweet) {
+                socket.emit("twitterTopTweet", $scope.twitterTopTweet);
+            }
+        }, true);
+
         socket.on("socialmedia", function (msg) {
             $scope.socialmedia = msg;
             $scope.socialmedia.scale = Number($scope.socialmedia.scalepc) / 100;	
@@ -89,11 +132,6 @@ app.controller('liveControlCGController', ['$scope', 'socket', 'localStorageServ
                 $scope.socialmedia.imageShow = true;
             }
         });
-
-        $scope.clearTwitterList = function(){
-            $scope.twitterList = undefined;
-            return localStorageService.remove('twitterList'); 
-        }
 
         $scope.$watch('socialmedia', function() {
             if ($scope.socialmedia) {
@@ -133,24 +171,40 @@ app.controller('instagramCGController', ['$scope', 'socket',
 
 app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 'localStorageService',
     function($scope, TwitterService, socket, localStorageService){        
+        // Get default options if they're not currently set
+        if($scope.twitterOptions == undefined){
+            socket.emit("twitterOptions:get");
+        }
+
+        // Listen to if the server gives us any update on the twitterOptions score.
+        socket.on("twitterOptions", function (msg) {
+            $scope.twitterOptions = msg;
+        });
+
+        // If the twitterOptions $scope updates, let's send that update to the server.
+        $scope.$watch('twitterOptions', function() {
+            if ($scope.twitterOptions) {
+                socket.emit("twitterOptions", $scope.twitterOptions);
+            }
+        }, true);
+        
         // Get previous tweets that have been found in the search, if they exist
         var stored = localStorageService.get('currentSearch');
         if(stored === null) {
-            $scope.results = [];
         } else {
             $scope.results = stored;
         }
 
-        // If there isn't a list of tweets yet then make an empty one 
+        // If there isn't a list of favorite tweets yet then make an empty one 
         if($scope.twitterList == undefined){
-            $scope.twitterList = [];
+            var twitterList = localStorageService.get('twitterList');
+            if(twitterList === null) {
+                $scope.twitterList = [];
+            } else {
+                $scope.twitterList = twitterList;
+            }
         }
-
-        //  If we dunno what to search by, let's go by popular tweets. This is set by the user
-        if($scope.searchBy == undefined){
-            $scope.searchBy = "popular";
-        }
-        
+       
         // Function for adding a particular tweet to the saved list
         $scope.addToList = function(item) {
             if (item.id_str && $scope.twitterList.includes(item) == false) {
@@ -166,30 +220,29 @@ app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 
             return localStorageService.remove('currentSearch'); 
         }
 
-
         // Main Tweet grabbing function. Also does some fiddling with the returned data. 
-        $scope.getSearch = function(searchText,searchBy){
-            console.log("Search string entered: ", searchText);
-            TwitterService.getSearch(searchText, searchBy)
+        $scope.getSearch = function(searchText,searchBy,searchMedia){
+            console.log("Search string entered: ", searchText + " " + searchBy + " " + searchMedia);
+            TwitterService.getSearch(searchText, searchBy, searchMedia)
                 .then(function(data){
                     $scope.twitterErrors = undefined;
                     $scope.results = JSON.parse(data.result.userData);
                     
                     for(i=0; i<$scope.results.statuses.length; i++){
-                    // Let's fix us some dates so we can use them
-                    $scope.results.statuses[i].created_at_JSDate = new Date($scope.results.statuses[i].created_at);
-                    // Now get rid of any picture links as we'll be displaying those!
-                    var pos = $scope.results.statuses[i].full_text.lastIndexOf("https://t.co/");
-                    if(pos > -1){
-                        $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.substring(0,pos);
+                        // Let's fix us some dates so we can use them
+                        $scope.results.statuses[i].created_at_JSDate = new Date($scope.results.statuses[i].created_at);
+                        // Now get rid of any picture links as we'll be displaying those!
+                        var pos = $scope.results.statuses[i].full_text.lastIndexOf("https://t.co/");
+                        if(pos > -1){
+                            $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.substring(0,pos);
+                        }
+                        // Split images
+                            $scope.results.statuses[i].user.profile_image_url_bigger = $scope.results.statuses[i].user.profile_image_url.replace("normal","bigger");
+                            $scope.results.statuses[i].user.profile_image_url_original = $scope.results.statuses[i].user.profile_image_url.replace("_normal","");
+                        // Get rid of annoying &amps;
+                        $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.replace(new RegExp('&amp;', 'g'), '&');
                     }
-                    // Split images
-                        $scope.results.statuses[i].user.profile_image_url_bigger = $scope.results.statuses[i].user.profile_image_url.replace("normal","bigger");
-                        $scope.results.statuses[i].user.profile_image_url_original = $scope.results.statuses[i].user.profile_image_url.replace("_normal","");
-                    // Get rid of annoying &amps;
-                    $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.replace(new RegExp('&amp;', 'g'), '&');
                     return localStorageService.set('currentSearch',$scope.results); 
-                    }
 
                     // console.log($scope.results);
                 })
@@ -198,6 +251,19 @@ app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 
                     $scope.twitterErrors = error.error;
                 })
             }
+        
+        $scope.$watch('twitter', function() {
+            if ($scope.twitter) {
+                socket.emit("twitter", $scope.twitter);
+            } else {
+                getTwitterData();
+            }
+        }, true);
+
+        function getTwitterData() {
+            socket.emit("twitter:get");
+        }
+            
     }
 ]);
 
@@ -234,9 +300,9 @@ app.controller('manualCGController', ['$scope', 'socket',
 ]);
 
 app.factory('TwitterService', function($http, $q){
-  var getSearch = function(searchText,searchBy){
+  var getSearch = function(searchText,searchBy,searchMedia){
     var d = $q.defer();
-    $http.post('/twitter/search', {searchText : searchText, searchBy : searchBy})
+    $http.post('/twitter/search', {searchText : searchText, searchBy : searchBy, searchMedia : searchMedia})
       .success(function(data){
         return d.resolve(data);
       })

@@ -128,11 +128,49 @@ label {
 /*              [Twitter Styling]                 */
 /**************************************************/
 
-div#tweetElement.defaultDesign {
-    position: absolute;
-    bottom: 3.5%; /* EBU Action Safe Zone */ 
+#tweetElement{
+    position: absolute !important;
+}
+
+.bottomLeft  {
     left: 3.5%;  /* EBU Action Safe Zone */
-    width: 40%;
+    bottom: 3.5%;
+}
+
+.bottomRight  {
+    right: 3.5%;  /* EBU Action Safe Zone */
+    bottom: 3.5%;
+}
+
+.bottomCenter  {
+    position: fixed;
+    bottom: 3.5%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, 0%);
+}
+
+.topCenter  {
+    position: fixed;
+    top: 3.5%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, 0%);
+}
+
+.middleOfEverything {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+
+/* Default Design */ 
+div#tweetElement.defaultDesign {
+    min-width: 400px;
+    width: 30%;
     background-color: #fefefe;
     border-radius: 5px;
     border: 1px solid #e1e8ed;
@@ -188,6 +226,66 @@ div#tweetElement.defaultDesign {
     line-height: 1.4;
 }
 
+/* Roses 2018 Design */ 
+div#tweetElement.lowerThirdDesign {
+    min-width: 375px;
+    position: absolute;
+    bottom: 3.5%; /* EBU Action Safe Zone */ 
+    left: 3.5%;  /* EBU Action Safe Zone */
+    width: 30%;
+    background-color: #f2f2f2;
+    border-bottom: 3px solid #1f1a34;
+}
+
+.lowerThirdDesign .tweetProfileImage {
+    display: none;
+}
+
+.lowerThirdDesign .tweetProfileImage img {
+}
+
+.lowerThirdDesign .tweetHeader {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    line-height: 2.0vmax;
+    background-color: #f2f2f2;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-weight: 700;
+}
+
+.lowerThirdDesign .tweetName {
+    display: none;
+}
+
+.lowerThirdDesign .tweetHandle {
+    color: #1f1a34;
+    font-size: 1.0vmax;
+    line-height: 2.0vmax;
+    background-color: #f2f2f2;
+    width: 100%;
+}
+
+.lowerThirdDesign .tweetVerified {
+}
+
+.lowerThirdDesign .tweetTwitterLogo {
+    display: none;    
+}
+
+.lowerThirdDesign .tweetText {
+    line-height: 1.6vmax;
+    font-size: 1.2vmax;
+    background-color: #1f1a34;
+    color: white;
+    padding: 12px;
+    padding: 12px;
+    display: block;
+    position: absolute;
+    bottom: calc(2.0vmax - 1px);
+    width: 100%;
+}
 /**************************************************/
 /*              [oEmbed Media]                    */
 /**************************************************/

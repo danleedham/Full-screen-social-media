@@ -19,24 +19,24 @@
             <div ng-if="socialmedia.background =='greenScreen'" class="backgroundimage greenScreen">
             </div>
             <div ng-if="socialmedia.background == 'fullImage'" class="backgroundimage">
-                <img ng-if="socialmedia.imageShow" ng-src="/images/background.png">
+                <img ng-src="/images/background.png">
             </div>
-            <div id="tweetElement" ng-class="socialmedia.design"> <!-- ng-show="socialmedia.show" -->
+            <div id="tweetElement" ng-class="[socialmedia.design, socialmedia.pos]" ng-if="socialmedia.tweetLive"> <!-- ng-show="socialmedia.show" -->
                 <div class="tweetHeader">
                     <div class="tweetProfileImage">
-                        <img class="profileImage" src="https://pbs.twimg.com/profile_images/984827746600869889/E4McMdAp_bigger.jpg">
+                        <img class="profileImage" ng-src={{twitterTopTweet.user.profile_image_url_bigger}}>
                     </div>
                     <div class="tweetAuthor">
                         <div class="tweetName">
-                            Nicky Morgan MP <div class="tweetVerified"></div>
+                            {{twitterTopTweet.user.name}} <div ng-if="twitterTopTweet.user.verified" class="tweetVerified"></div>
                             </div>
                         <div class="tweetHandle">
-                            @NickyMorgan01
+                            @{{twitterTopTweet.user.screen_name}}
                         </div>
                     </div>
                 </div>
                 <div class="tweetText">
-                    Pretty sure the Stroll family have enough money to buy a new camera lense. After all, it bought Stroll his seat at Williams... #F1Barcelona #SpanishGP #F1 #SkyF1
+                        {{twitterTopTweet.full_text}}
                 </div>
                 <div class="tweetMedia">
                 </div>
