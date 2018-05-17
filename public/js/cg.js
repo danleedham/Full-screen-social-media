@@ -1,14 +1,68 @@
 var app = angular.module('cgApp', ['ngAnimate', 'socket-io']);
 
-// Social Media Controller, as developed by Dan Leedham with help from the amazing Tom J
+app.controller('liveControlCtrl', ['$scope', '$http', 'socket',
+    function($scope, $http, socket){
+        // Social Media contains most of the general settings
+        socket.on("socialmedia", function (msg) {
+            $scope.socialmedia = msg;
+        });
+        			
+        $scope.$watch('socialmedia', function() {
+            if (!$scope.socialmedia) {
+                getSocialMediaData();
+            }
+        }, true);
+
+        function getSocialMediaData() {
+            socket.emit("socialmedia:get");
+        }
+
+        // Twitter Top Tweet contains the tweet content of the current top/live tweet      			
+        socket.on("twitterTopTweet", function (msg) {
+            $scope.twitterTopTweet = msg;
+            // Shuffling of multi-image tweets
+            if($scope.twitterTopTweet.extended_entities.media.length > 1){
+                $scope.currentImageValue = 0;
+                setInterval($scope.rotateImages,3000);
+            }
+
+            $scope.rotateImages = function (){
+                if($scope.currentImageValue < $scope.twitterTopTweet.extended_entities.media.length - 1){
+                    $scope.currentImageValue = $scope.currentImageValue + 1;
+                    $scope.currentImage = $scope.twitterTopTweet.extended_entities.media[$scope.currentImageValue].id_str;
+                } else {
+                    $scope.currentImageValue = 0;
+                    $scope.currentImage = $scope.twitterTopTweet.extended_entities.media[0].id_str;
+                }
+            }
+        });
+        
+
+        $scope.$watch('twitterTopTweet', function() {
+            if (!$scope.twitterTopTweet) {
+                getTwitterTopTweetData();
+            } else {
+
+            }
+        }, true);
+
+        function getTwitterTopTweetData() {
+            socket.emit("twitterTopTweet:get");
+        }
+
+    }
+
+]);
+
+// Original Social Media Controller, as developed by Dan Leedham with help from the amazing Tom J
 // Initialise with the usual plus http for grabbing data from social media sites
 // SCE allows us to use Trust HTML for the data we get back from social media sites
-app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
+app.controller('manualControlCtrl', ['$scope', '$http', 'socket', '$sce',
     function($scope, $http, socket, $sce){
         var showTweet = false;
-        socket.on("socialmedia", function (msg) {
+        socket.on("manual", function (msg) {
             tweetUrl = msg.tweet;
-            $scope.socialmedia = msg;
+            $scope.manual = msg;
             showTweet = msg.show;
             if (!showTweet) {
                 $scope.showTweet = false;
@@ -18,9 +72,9 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
             }
         });
 
-// Now let's go get the html code from our provider
-// tweetUrl in the function is the text entered by the user in the backend
-// tweetUrl requires a full post/video url to work. References to 'tweet' usually mean post
+        // Now let's go get the html code from our provider
+        // tweetUrl in the function is the text entered by the user in the backend
+        // tweetUrl requires a full post/video url to work. References to 'tweet' usually mean post
 		var fetchTweetHTML = function (tweetUrl) {
           var config = {headers:  {
               'Accept': 'application/jsonp',
@@ -28,8 +82,8 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
             }
           };
           
-// Checks the user provided url, determines which oEmbed engine to use
-// For more oEmbed sites, add another else if        
+        // Checks the user provided url, determines which oEmbed engine to use
+        // For more oEmbed sites, add another else if        
          if (tweetUrl.indexOf('instagram.com') >= 0) {
                   oEmbedUrl = 'http://api.instagram.com/oembed?url=';
           } else if (tweetUrl.indexOf('facebook.com') >= 0) {
@@ -44,14 +98,14 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
                   oEmbedUrl = 'https://api.twitter.com/1/statuses/oembed.json?url=';
           }
          
-		if ($scope.socialmedia.hidemedia) {
+		if ($scope.manual.hidemedia) {
 			var suffix = '&hide_media=true&hidecaption=true';
 		}
 		else {
 			var suffix = "";
 		}
-// $http.jsonp goes gets the data from oEmbed
-          $http.jsonp(oEmbedUrl+tweetUrl+'&callback=JSON_CALLBACK'+suffix, config)
+        // $http.jsonp goes gets the data from oEmbed
+        $http.jsonp(oEmbedUrl+tweetUrl+'&callback=JSON_CALLBACK'+suffix, config)
             .success(function(data) {
                 $scope.tweetHTML = $sce.trustAsHtml(data.html);		// trustAsHtml stops the app adding '' around the html code
                 $scope.tweetAuthor = data.author_name;				// Not used yet, but could be handy
@@ -82,41 +136,14 @@ app.controller('socialmediaCtrl', ['$scope', '$http', 'socket', '$sce',
           );
         };
         			
-        $scope.$watch('socialmedia', function() {
-            if (!$scope.socialmedia) {
-                getSocialMediaData();
+        $scope.$watch('manual', function() {
+            if (!$scope.manual) {
+                getManualData();
             }
         }, true);
 
-        function getSocialMediaData() {
-            socket.emit("socialmedia:get");
-        }
-    }
-
-]);
-
-app.controller('twittercollectionsCtrl', ['$scope', '$interval', '$http', 'socket', '$sce',
-    function($scope, $interval, $http, socket,  $sce){        
-        socket.on("twittercollections", function (msg) {
-            $scope.twittercollections = msg;
-            if(msg.show){
-                var screenname = msg.screenname;
-                var collectionid = msg.collectionid;
-                var collectionCode = '<a class="twitter-grid" href="https://twitter.com/'+screenname+'/timelines/'+collectionid+'"> Embedded Tweets </a>';
-                $scope.collectionHTML = $sce.trustAsHtml(collectionCode);
-                // console.log(collectionCode);
-                twttr.widgets.load();
-            }
-        });
-        
-        $scope.$watch('twittercollections', function() {
-            if (!$scope.twittercollections) {
-                getTwitterCollectionsData();
-            }
-        }, true);
-
-        function getTwitterCollectionsData() {
-            socket.emit("twittercollections:get");
+        function getManualData() {
+            socket.emit("manual:get");
         }
     }
 

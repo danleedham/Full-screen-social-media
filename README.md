@@ -1,8 +1,8 @@
 # Full Screen Social Media Graphics
 
-## Setting images
+## Setting background image
 
-Navigate to /public/images/ and overwrite ```blurredlogo.png largelogo.png topleftlogo.png toprightlogo.png ``` with images of the same resolution as your output (for example, 1280x720, 1920x1080. Which image is used for when the post if off or on is controlled in the backend. 
+Navigate to /public/images/ and overwrite ```background.png``` with an of the same resolution as your output (for example, 1280x720, 1920x1080. Whether the image is used is controlled in the backend. 
 
 ## Launching 
 
@@ -12,10 +12,6 @@ Double click
 ./startup.bat
 ```
 
-For the [admin](http://127.0.0.1:3000/admin) page, navigate to http://127.0.0.1:3000/admin
-
-For the [graphics](http://127.0.0.1:3000) output, navigate to http://127.0.0.1:3000
-
 ### Linux / Mac
 Run from the directory this readme is in:
 ```
@@ -23,6 +19,10 @@ npm install
 node server.js
 ```
 
-For the [admin](http://127.0.0.1:3000/admin) page, navigate to http://127.0.0.1:3000/admin
+## Using
 
-For the [graphics](http://127.0.0.1:3000) output, navigate to http://127.0.0.1:3000
+For the [admin](http://127.0.0.1:3002/admin) page, navigate to http://127.0.0.1:3002/admin
+
+For the [graphics](http://127.0.0.1:3002) output, navigate to http://127.0.0.1:3002
+
+See instructions in the Live Control area. 

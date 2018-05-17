@@ -1,3 +1,5 @@
+/* Frontend Style */
+
 * {
   -webkit-box-sizing: border-box;
   box-sizing:border-box;                                   /* This sets all elements to be the actual set dimensions, disregarding padding and borders */
@@ -6,7 +8,7 @@
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Roboto', sans-serif;
     background:transparent;                          /* The HTML consumer actually makes your background transparent by default, unless a color or image is specified - but this might be usefull when debugging in browsers */
     overflow:hidden;                                 /* Hide any overflowing elements - to disable scollbars */
     -webkit-font-smoothing:antialiased !important;
@@ -26,6 +28,10 @@ h1, h2, h3, h4 {
 .large {
     top: -13px;
     font-size: 40px !important;
+}
+
+label {
+    font-weight: bold;
 }
 
 /**************************************************/
@@ -51,11 +57,7 @@ h1, h2, h3, h4 {
 }
 
 .top {
-	-ms-flex-align: center;
-	-webkit-align-items: center;
-	-webkit-box-align: center;
-	justify-content: center;
-    flex-direction: column;
+	top: 50px;
 }
 
 .center {
@@ -93,19 +95,278 @@ h1, h2, h3, h4 {
   clear: both;
 }
 
+.greenScreen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00ff00; 
+    /* display: none; */
+}
+
+.backgroundimage {
+    height: 100vh;
+    width: 100vw;
+}
+
 .backgroundimage img {
-	position: absolute;
+    position: absolute;
 	width: 100%;
-	height: 100%;
+	height: auto;
 	background-size: cover;
 	top: 0;
 	bottom 0;
 	left 0;
-	right 0;
+    right 0;
+    /* display: none; */
 }
-    
+
 /**************************************************/
-/*              [Social Media]                    */
+/*              [Twitter Styling]                 */
+/**************************************************/
+
+#tweetElement{
+    position: absolute !important;
+}
+
+.bottomLeft  {
+    left: 3.5%;  /* EBU Action Safe Zone */
+    bottom: 3.5%;
+}
+
+.bottomRight  {
+    right: 3.5%;  /* EBU Action Safe Zone */
+    bottom: 3.5%;
+}
+
+.bottomCenter  {
+    position: fixed;
+    bottom: 3.5%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, 0%);
+}
+
+.topCenter  {
+    position: fixed;
+    top: 3.5%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, 0%);
+}
+
+.middleOfEverything {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+
+/* Default Design */ 
+div#tweetElement.defaultDesign {
+    min-width: 31.25vmax;
+    width: 40%;
+    background-color: #fefefe;
+    border-radius: 0.4vmax;
+    border: 1px solid #e1e8ed;
+    padding: 1.55vmax 1.55vmax 0.9vmax 1.55vmax;
+}
+
+.defaultDesign .tweetProfileImage {
+    height: 2.8vmax;
+    margin-right: 0.5vmax;
+}
+
+.defaultDesign .tweetProfileImage img {
+    height: 100%;
+    border-radius: 50%;
+}
+
+.defaultDesign .tweetHeader {
+    display: flex;
+    overflow: hidden;
+}
+
+.defaultDesign .tweetName {
+    font-weight: 700;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 4px;
+    font-size: 1.4vmax;
+}
+
+.defaultDesign .tweetHandle {
+    color: #697882;
+    font-size: 1.2vmax;
+    line-height: 1.3;
+}
+
+.defaultDesign .tweetVerified {
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 1.3vmax;
+    height: 1.5vmax;
+    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2072%22%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M0%200h64v72H0z%22%2F%3E%3Cpath%20fill%3D%22%231da1f2%22%20d%3D%22M3%2037.315c0%204.125%202.162%207.726%205.363%209.624-.056.467-.09.937-.09%201.42%200%206.103%204.72%2011.045%2010.546%2011.045%201.295%200%202.542-.234%203.687-.686C24.22%2062.4%2027.827%2064.93%2032%2064.93c4.174%200%207.782-2.53%209.49-6.213%201.148.45%202.39.685%203.69.685%205.826%200%2010.546-4.94%2010.546-11.045%200-.483-.037-.953-.093-1.42C58.83%2045.04%2061%2041.44%2061%2037.314c0-4.37-2.42-8.15-5.933-9.946.427-1.203.658-2.5.658-3.865%200-6.104-4.72-11.045-10.545-11.045-1.302%200-2.543.232-3.69.688-1.707-3.685-5.315-6.216-9.49-6.216-4.173%200-7.778%202.53-9.492%206.216-1.146-.455-2.393-.688-3.688-.688-5.827%200-10.545%204.94-10.545%2011.045%200%201.364.23%202.662.656%203.864C5.42%2029.163%203%2032.944%203%2037.314z%22%2F%3E%3Cpath%20fill%3D%22%23FFF%22%20d%3D%22M17.87%2039.08l7.015%206.978c.585.582%201.35.873%202.116.873.77%200%201.542-.294%202.127-.883.344-.346%2015.98-15.974%2015.98-15.974%201.172-1.172%201.172-3.07%200-4.243-1.17-1.17-3.07-1.172-4.242%200l-13.87%2013.863-4.892-4.868c-1.174-1.168-3.074-1.164-4.242.01-1.168%201.176-1.163%203.075.01%204.244z%22%2F%3E%3C%2Fsvg%3E);
+}
+
+.defaultDesign .tweetTwitterLogo {
+    position: absolute;
+    top: 1.57vmax;
+    right: 1.57vmax;
+    width: 1.6vmax;
+    height: 1.6vmax;
+    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2072%2072%22%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M0%200h72v72H0z%22%2F%3E%3Cpath%20class%3D%22icon%22%20fill%3D%22%231da1f2%22%20d%3D%22M68.812%2015.14c-2.348%201.04-4.87%201.744-7.52%202.06%202.704-1.62%204.78-4.186%205.757-7.243-2.53%201.5-5.33%202.592-8.314%203.176C56.35%2010.59%2052.948%209%2049.182%209c-7.23%200-13.092%205.86-13.092%2013.093%200%201.026.118%202.02.338%202.98C25.543%2024.527%2015.9%2019.318%209.44%2011.396c-1.125%201.936-1.77%204.184-1.77%206.58%200%204.543%202.312%208.552%205.824%2010.9-2.146-.07-4.165-.658-5.93-1.64-.002.056-.002.11-.002.163%200%206.345%204.513%2011.638%2010.504%2012.84-1.1.298-2.256.457-3.45.457-.845%200-1.666-.078-2.464-.23%201.667%205.2%206.5%208.985%2012.23%209.09-4.482%203.51-10.13%205.605-16.26%205.605-1.055%200-2.096-.06-3.122-.184%205.794%203.717%2012.676%205.882%2020.067%205.882%2024.083%200%2037.25-19.95%2037.25-37.25%200-.565-.013-1.133-.038-1.693%202.558-1.847%204.778-4.15%206.532-6.774z%22%2F%3E%3C%2Fsvg%3E);
+}
+
+.defaultDesign .tweetText {
+    margin-top: 0.8vmax;
+    line-height: 1.4;
+    font-size: 1.2vmax;
+}
+
+/* Roses 2018 Design */ 
+div#tweetElement.lowerThirdDesign {
+    min-width: 375px;
+    position: absolute;
+    bottom: 3.5%; /* EBU Action Safe Zone */ 
+    left: 3.5%;  /* EBU Action Safe Zone */
+    width: 35%;
+    background-color: #f2f2f2;
+    border-bottom: 0.4vmax solid #1f1a34;
+}
+
+.lowerThirdDesign .tweetProfileImage {
+    display: none;
+}
+
+.lowerThirdDesign .tweetProfileImage img {
+}
+
+.lowerThirdDesign .tweetHeader {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    line-height: 2.0vmax;
+    background-color: #f2f2f2;
+    padding-left: 0.9vmax;
+    padding-right: 0.9vmax;
+    font-weight: 700;
+}
+
+.lowerThirdDesign .tweetName {
+    display: none;
+}
+
+.lowerThirdDesign .tweetHandle {
+    color: #1f1a34;
+    font-size: 1.0vmax;
+    line-height: 2.0vmax;
+    background-color: #f2f2f2;
+    width: 100%;
+}
+
+.lowerThirdDesign .tweetVerified {
+}
+
+.lowerThirdDesign .tweetTwitterLogo {
+    display: none;    
+}
+
+.lowerThirdDesign .tweetText {
+    line-height: 1.6vmax;
+    font-size: 1.2vmax;
+    background-color: #1f1a34;
+    color: white;
+    padding: 1.0vmax;
+    display: block;
+    position: absolute;
+    bottom: calc(2.0vmax - 1px);
+    width: 100%;
+}
+
+/* Big Image Design */ 
+div#tweetElement.bigImageDesign {
+    min-width: 500px;
+    width: 75%;
+    background-color: #f2f2f2;
+}
+
+.bigImageDesign .tweetProfileImage {
+    display: none;
+}
+
+.bigImageDesign .tweetProfileImage img {
+
+}
+
+.bigImageDesign .tweetHeader {
+    float: right;
+    width: 100%;
+    padding-top: 12px;
+}
+
+.bigImageDesign .tweetName {
+    width: 100%;
+    font-weight: 700;
+    line-height: 1.0;
+    font-size: 2.2vmax;
+    padding-left: 14px;
+}
+
+.bigImageDesign .tweetHandle {
+    color: #697882;
+    font-size: 1.4vmax;
+    padding-left: 14px;
+}
+
+.bigImageDesign .tweetVerified {
+    display: none;
+    vertical-align: text-bottom;
+    width: 17px;
+    height: 20px;
+    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2072%22%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M0%200h64v72H0z%22%2F%3E%3Cpath%20fill%3D%22%231da1f2%22%20d%3D%22M3%2037.315c0%204.125%202.162%207.726%205.363%209.624-.056.467-.09.937-.09%201.42%200%206.103%204.72%2011.045%2010.546%2011.045%201.295%200%202.542-.234%203.687-.686C24.22%2062.4%2027.827%2064.93%2032%2064.93c4.174%200%207.782-2.53%209.49-6.213%201.148.45%202.39.685%203.69.685%205.826%200%2010.546-4.94%2010.546-11.045%200-.483-.037-.953-.093-1.42C58.83%2045.04%2061%2041.44%2061%2037.314c0-4.37-2.42-8.15-5.933-9.946.427-1.203.658-2.5.658-3.865%200-6.104-4.72-11.045-10.545-11.045-1.302%200-2.543.232-3.69.688-1.707-3.685-5.315-6.216-9.49-6.216-4.173%200-7.778%202.53-9.492%206.216-1.146-.455-2.393-.688-3.688-.688-5.827%200-10.545%204.94-10.545%2011.045%200%201.364.23%202.662.656%203.864C5.42%2029.163%203%2032.944%203%2037.314z%22%2F%3E%3Cpath%20fill%3D%22%23FFF%22%20d%3D%22M17.87%2039.08l7.015%206.978c.585.582%201.35.873%202.116.873.77%200%201.542-.294%202.127-.883.344-.346%2015.98-15.974%2015.98-15.974%201.172-1.172%201.172-3.07%200-4.243-1.17-1.17-3.07-1.172-4.242%200l-13.87%2013.863-4.892-4.868c-1.174-1.168-3.074-1.164-4.242.01-1.168%201.176-1.163%203.075.01%204.244z%22%2F%3E%3C%2Fsvg%3E);
+}
+
+.bigImageDesign .tweetTwitterLogo {
+    display: none;    
+}
+
+.bigImageDesign .tweetText {
+    margin: 14px;
+    line-height: 1.4;
+    float: right;
+    font-size: 1.5vmax;
+}
+
+.bigImageDesign .tweetMedia {
+    width: 60%;
+    float: left;
+    padding: 6px;
+    background-color: #fefefe;
+}
+
+.bigImageDesign .tweetMedia img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+.bigImageDesign .tweetContent {
+    width: 40%;
+    float: right;
+    background-color: #f2f2f2;
+    padding: 6px;
+}
+
+
+/**************************************************/
+/*              [oEmbed Media]                    */
 /**************************************************/
 
 .social-media {
@@ -164,11 +425,6 @@ ol.h-feed {
 
 .showElement {
     display: block;
-}
-
-.backgroundimage {
-    height: 100vh;
-    width: 100vw;
 }
 
 .onDark {
