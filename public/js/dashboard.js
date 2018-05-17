@@ -117,6 +117,15 @@ app.controller('liveControlCGController', ['$scope', 'socket', 'localStorageServ
             return localStorageService.set('twitterTopTweet',$scope.twitterTopTweet);
         }
 
+        $scope.makeLive = function($index){
+            $scope.makeNextOnAir($index);
+            $scope.socialmedia.tweetLive = true;
+        }
+
+        $scope.hideLive = function($index){
+            $scope.hideLiveTweet();
+        }
+
         $scope.clearInstructions = function(){
             $scope.hideInstructions = true;
             return localStorageService.set('hideInstructions',true);
@@ -222,6 +231,11 @@ app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 
                 return localStorageService.set('twitterList',$scope.twitterList); 
             }
         };
+
+        $scope.makeLive = function(result){
+            $scope.twitterTopTweet = result;
+            return localStorageService.set('twitterTopTweet',$scope.twitterTopTweet);
+        }
 
         // Function for clearning the search results
         $scope.clearCurrentSearch = function(){
