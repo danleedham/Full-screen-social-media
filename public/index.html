@@ -21,7 +21,7 @@
             <div ng-if="socialmedia.background == 'fullImage'" class="backgroundimage">
                 <img ng-src="/images/background.png">
             </div>
-            <div id="tweetElement" ng-class="[socialmedia.design, socialmedia.pos]" ng-if="socialmedia.tweetLive"> <!-- ng-show="socialmedia.show" -->
+            <div id="tweetElement" ng-class="[socialmedia.design, socialmedia.pos, socialmedia.animate]" ng-if="socialmedia.tweetLive"> <!-- ng-show="socialmedia.show" -->
                 <div class="tweetContent">
                     <div class="tweetHeader">
                         <div class="tweetProfileImage">
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="tweetMedia" ng-if="socialmedia.design == 'bigImageDesign'">
-                    <div ng-repeat="media in twitterTopTweet.entities.media">
+                    <div ng-repeat="media in twitterTopTweet.extended_entities.media | filter: { id_str : currentImage }">
                         <img ng-src="{{media.media_url}}" width="{{media.sizes.large.w}}" height="{{media.sizes.large.h}}" class="tweetMediaImage">
                     </div>
                 </div>

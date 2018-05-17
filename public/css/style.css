@@ -9,6 +9,11 @@ html, body {
     font-family: "MrEavesXLModOT", Arial, Helvetica, sans-serif !important;
 }
 
+h2 {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
 #brand {
 	margin-top: 2em;
     margin-bottom: 0.5em;

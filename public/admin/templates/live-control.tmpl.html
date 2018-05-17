@@ -23,98 +23,96 @@
 			<div class="four wide column">
 				<label>Animation</label>
 				<select ng-model="socialmedia.animate" class="ui dropdown">
-						<option value="toggle" selected>Toggle</option>
-						<option value="bouncy-slide-top">Bouncy Slide Top</option>
-						<option value="slide-down">Slide Down</option>
-						<option value="bouncy-slide-down">Bouncy Slide Down</option>
-						<option value="spin-toggle">Spin Toggle</option>
-					</select>
-				</div>
-				<div class="four wide column">
-						<label>Window Background</label>
-						<select ng-model="socialmedia.background" class="ui dropdown">
-								<option value="fullImage" selected>fullImage</option>
-								<option value="greenScreen">Chroma Green (#00ff00)</option>
-								<option value="transparent">Transparent</option>
-							</select>
-						</div>
+					<option value="toggle" selected>Toggle</option>
+					<option value="scale-fade">Scale Fade</option>
+					<option value="flip-in">Flip In</option>
+					<option value="rotate-in">Rotate In</option>
+					<option value="spin-toggle">Spin Toggle</option>
+					<option value="slide-top">Slide Top</option>
+					<option value="bouncy-slide-top">Slide Top (Bounce)</option>
+					<option value="slide-down">Slide Down</option>
+					<option value="bouncy-slide-down">Slide Down (Bounce)</option>
+					<option value="slide-right">Slide Right</option>
+					<option value="bouncy-slide-right">Slide Right (Bounce)</option>
+					<option value="slide-left">Slide Left</option>
+					<option value="bouncy-slide-left">Slide Left (Bounce)</option>
+				</select>
+			</div>
+			<div class="four wide column">
+				<label>Window Background</label>
+				<select ng-model="socialmedia.background" class="ui dropdown">
+					<option value="fullImage" selected>fullImage</option>
+					<option value="greenScreen">Chroma Green (#00ff00)</option>
+					<option value="transparent">Transparent</option>
+				</select>
+			</div>
  		</div>
 	<br>
+	<h2 ng-if="twitterTopTweet">Top Tweet</h2>
 	<div class="ui form segment" ng-if="twitterTopTweet">
-			<div id="tweetList">
-					<div class="ui grid tweetContent topTweetContent">
-						<div class="four wide column">
-							<img ng-src={{twitterTopTweet.user.profile_image_url_bigger}} class="userProfileImage">
-							<div class="tweetDetails">
-								<div class="userName">
-									{{twitterTopTweet.user.name}}
-								</div>
-								<div class="userHandle">
-									<a href="https://twitter.com/{{twitterTopTweet.user.screen_name}}" target="_blank">@{{twitterTopTweet.user.screen_name}} <span class="userVerified" ng-if="twitterTopTweet.user.verified">&#10004;</span></a>
-								</div>
-								<div class="tweetDateTime">
-								{{twitterTopTweet.created_at_JSDate | date: 'dd/MM/yy @ h:mma'}}
-								</div>
-							</div>
-						</div>     
-						<div class="text nine wide column">
-							{{twitterTopTweet.full_text}}
-						</div>
-						<div class="saveButtons three wide column">
-								<div  class="ui vertical buttons">
-									<button class="ui icon pink button" ng-click="putTweetLive(twitterTopTweet)">Live</button>
-									<button class="ui icon orange button" ng-click="hideLiveTweet(twitterTopTweet)">Hide</button>
-								</div>				
-						</div>
-						<div class="row" ng-if="twitterTopTweet.entities.media">
-							<div class="four wide column">
-							</div>
-						<div ng-repeat="media in twitterTopTweet.entities.media" class="nine wide column">
-							<img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}" class="tweetMedia">
-						</div>
-						<div class="three wide column">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!-- Current Top Tweet -->
- 	<div class="ui form segment" ng-if="twitterList">
 		<div id="tweetList">
-				<div ng-repeat="result in twitterList track by $index" class="ui grid tweetContent" ng-class-even="'odd'">
-					<div class="four wide column">
-						<img ng-src={{result.user.profile_image_url_bigger}} class="userProfileImage">
-						<div class="tweetDetails">
-							<div class="userName">
-								{{result.user.name}}
-							</div>
-							<div class="userHandle">
-								<a href="https://twitter.com/{{result.user.screen_name}}" target="_blank">@{{result.user.screen_name}} <span class="userVerified" ng-if="result.user.verified">&#10004;</span></a>
-							</div>
-							<div class="tweetDateTime">
-							{{result.created_at_JSDate | date: 'dd/MM/yy @ h:mma'}}
-							</div>
+			<div class="ui grid tweetContent topTweetContent">
+				<div class="four wide column">
+					<img ng-src={{twitterTopTweet.user.profile_image_url_bigger}} class="userProfileImage">
+					<div class="tweetDetails">
+						<div class="userName">
+							{{twitterTopTweet.user.name}}
 						</div>
-					</div>     
-					<div class="text nine wide column">
-						{{result.full_text}}
-					</div>
-					<div class="saveButtons three wide column">
-							<div class="ui vertical buttons" style="text-align:center">
-								<button class="ui icon pink button" ng-click="makeLive($index)">Live</button>							
-								<button class="ui icon orange button" ng-click="hideLive($index)">Hide</button>
-							</div>
-							<div  class="ui vertical buttons">
-								<button class="ui icon black button" ng-click="makeNextOnAir($index)"><i class="star icon"></i></button>
-								<button class="ui icon red button" ng-click="removeFromList($index)"><i class="minus icon"></i></button>
+						<div class="userHandle">
+							<a href="https://twitter.com/{{twitterTopTweet.user.screen_name}}" target="_blank">@{{twitterTopTweet.user.screen_name}} <div class="tweetVerified" ng-if="twitterTopTweet.user.verified"></div></a>
+						</div>
+						<div class="tweetDateTime">
+						{{twitterTopTweet.created_at_JSDate | date: 'dd/MM/yy @ h:mma'}}
 						</div>
 					</div>
-					<div class="row" ng-if="result.entities.media">
-						<div class="four wide column">
-						</div>
-					<div ng-repeat="media in result.entities.media" class="nine wide column">
+				</div>     
+				<div class="text nine wide column">
+					{{twitterTopTweet.full_text}}
+					<div ng-repeat="media in twitterTopTweet.extended_entities.media" class="nine wide column" style="padding-top: 6px;">
 						<img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}" class="tweetMedia">
 					</div>
-					<div class="three wide column">
+				</div>
+				<div class="saveButtons three wide column">
+					<div  class="ui vertical buttons">
+						<button class="ui icon pink button" ng-click="putTweetLive(twitterTopTweet)">Live</button>
+						<button class="ui icon orange button" ng-click="hideLiveTweet(twitterTopTweet)">Hide</button>
+					</div>				
+				</div>
+			</div>
+		</div>
+	</div><!-- End current top tweet -->
+	<h2 ng-if="twitterList">Favorite Tweets</h2>	
+ 	<div class="ui form segment" ng-if="twitterList">
+		<div id="tweetList">
+			<div ng-repeat="result in twitterList track by $index" class="ui grid tweetContent" ng-class-even="'odd'">
+				<div class="four wide column">
+					<img ng-src={{result.user.profile_image_url_bigger}} class="userProfileImage">
+					<div class="tweetDetails">
+						<div class="userName">
+							{{result.user.name}}
+						</div>
+						<div class="userHandle">
+							<a href="https://twitter.com/{{result.user.screen_name}}" target="_blank">@{{result.user.screen_name}} <div class="tweetVerified" ng-if="result.user.verified"></div></a>
+						</div>
+						<div class="tweetDateTime">
+						{{result.created_at_JSDate | date: 'dd/MM/yy @ h:mma'}}
+						</div>
+					</div>
+				</div>     
+				<div class="text nine wide column">
+					{{result.full_text}}
+					<div ng-repeat="media in result.extended_entities.media" class="nine wide column" style="padding-top: 6px;">
+						<img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}" class="tweetMedia">
+					</div>
+				</div>
+				<div class="saveButtons three wide column">
+						<div class="ui vertical buttons" style="text-align:center">
+							<button class="ui icon pink button" ng-click="makeLive($index)">Live</button>							
+							<button class="ui icon orange button" ng-click="hideLive($index)">Hide</button>
+						</div>
+						<div  class="ui vertical buttons">
+							<button class="ui icon black button" ng-click="makeNextOnAir($index)"><i class="upload icon"></i></button>
+							<button class="ui icon red button" ng-click="removeFromList($index)"><i class="minus icon"></i></button>
 					</div>
 				</div>
 			</div>
@@ -123,4 +121,18 @@
 	<div ng-if="twitterList" class="sixteen wide column">
 			<div class="ui red button"  style="width: 100%;" ng-click="clearTwitterList()">Clear All Favorites</div>
 	</div>
+</div>
+<div ng-if="!hideInstructions" class="ui form segment">
+	<div class="sixteen wide column">
+		<h2 style="padding-bottom: 12px">How to use this here thing</h2>
+		<p>Use Twitter Search (search text, popular/recent, include/exclude media) to create a list of curated favourite Tweets. Type your search, then press return to search. Search again by pressing return.</p>
+		<p>
+			Use Live Control to select the design, location, animation and window background. Then either:
+			<li>Select a 'Top Tweet', which loads a single tweet into the Top Tweet area of the for quick Live/Hide</li>
+			<li>Use the Live/Hide buttons on the curated tweets to send a tweet directly live.</li>
+		</p>
+		<p>Manual Embed allows you to paste a URL from Twitter, Instagram or Facebook and uses their oEmbed code to generate the visual.</p>
+		<div class="ui red button"  style="width: 25%;" ng-click="clearInstructions()">Yeah, I get it. </div>
+	</div>
+
 </div><!-- Main page ui form segment-->

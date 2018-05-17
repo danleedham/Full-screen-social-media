@@ -87,6 +87,11 @@ app.controller('liveControlCGController', ['$scope', 'socket', 'localStorageServ
         } else {
             $scope.twitterTopTweet = twitterTopTweet;
         }
+        var hideInstructions = localStorageService.get('hideInstructions');
+        if(hideInstructions === null) {
+        } else {
+            $scope.hideInstructions = hideInstructions;
+        }
         
         $scope.clearTwitterList = function(){
             $scope.twitterList = undefined;
@@ -110,6 +115,11 @@ app.controller('liveControlCGController', ['$scope', 'socket', 'localStorageServ
         $scope.makeNextOnAir = function($index){
             $scope.twitterTopTweet = $scope.twitterList[$index];
             return localStorageService.set('twitterTopTweet',$scope.twitterTopTweet);
+        }
+
+        $scope.clearInstructions = function(){
+            $scope.hideInstructions = true;
+            return localStorageService.set('hideInstructions',true);
         }
 
         $scope.$watch('twitterTopTweet', function() {
@@ -242,6 +252,7 @@ app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 
                         // Get rid of annoying &amps;
                         $scope.results.statuses[i].full_text = $scope.results.statuses[i].full_text.replace(new RegExp('&amp;', 'g'), '&');
                     }
+                    // console.log($scope.results);
                     return localStorageService.set('currentSearch',$scope.results); 
 
                     // console.log($scope.results);

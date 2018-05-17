@@ -51,22 +51,17 @@
       </div>     
       <div class="text nine wide column">
         {{result.full_text}}
+        <div ng-repeat="media in result.extended_entities.media" class="nine wide column" style="padding-top: 6px">
+            <img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}" class="tweetMedia">
+          </div>
       </div>
       <div class="saveButtons three wide column">
         <div class="ui icon yellow button" ng-click="addToList(result)"> 
-          <i class="star icon"></i>
+          <i class="large star icon"></i>
         </div>
         <div class="ui icon black button" ng-click="makeNextOnAir(result)">
-            <i class="star icon"></i>
+            <i class="large unhide icon"></i>
           </div>
-      </div>
-      <div class="row" ng-if="result.entities.media">
-        <div class="five wide column">
-        </div>
-      <div ng-repeat="media in result.entities.media" class="nine wide column">
-        <img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}" class="tweetMedia">
-      </div>
-      <div class="two wide column">
       </div>
     </div>
   </div>

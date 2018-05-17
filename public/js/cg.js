@@ -20,12 +20,29 @@ app.controller('liveControlCtrl', ['$scope', '$http', 'socket',
         // Twitter Top Tweet contains the tweet content of the current top/live tweet      			
         socket.on("twitterTopTweet", function (msg) {
             $scope.twitterTopTweet = msg;
-            console.log(msg);
+            // Shuffling of multi-image tweets
+            if($scope.twitterTopTweet.extended_entities.media.length > 1){
+                $scope.currentImageValue = 0;
+                setInterval($scope.rotateImages,3000);
+            }
+
+            $scope.rotateImages = function (){
+                if($scope.currentImageValue < $scope.twitterTopTweet.extended_entities.media.length - 1){
+                    $scope.currentImageValue = $scope.currentImageValue + 1;
+                    $scope.currentImage = $scope.twitterTopTweet.extended_entities.media[$scope.currentImageValue].id_str;
+                } else {
+                    $scope.currentImageValue = 0;
+                    $scope.currentImage = $scope.twitterTopTweet.extended_entities.media[0].id_str;
+                }
+            }
         });
+        
 
         $scope.$watch('twitterTopTweet', function() {
             if (!$scope.twitterTopTweet) {
                 getTwitterTopTweetData();
+            } else {
+
             }
         }, true);
 
