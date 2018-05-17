@@ -95,35 +95,6 @@ label {
   clear: both;
 }
 
-.greenScreen {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #00ff00; 
-    /* display: none; */
-}
-
-.backgroundimage {
-    height: 100vh;
-    width: 100vw;
-}
-
-.backgroundimage img {
-    position: absolute;
-	width: 100%;
-	height: auto;
-	background-size: cover;
-	top: 0;
-	bottom 0;
-	left 0;
-    right 0;
-    /* display: none; */
-}
-
 /**************************************************/
 /*              [Twitter Styling]                 */
 /**************************************************/
@@ -362,79 +333,4 @@ div#tweetElement.bigImageDesign {
     float: right;
     background-color: #f2f2f2;
     padding: 6px;
-}
-
-
-/**************************************************/
-/*              [oEmbed Media]                    */
-/**************************************************/
-
-.social-media {
-  width: 500px;
-  background-color: rgba(255, 255, 255, 0.0);
-  font-size: 0.0vw;
-  border-radius: 5px;
-  background-clip: padding-box;
-}
-
-.social-media .big-center iframe {
-	position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-}
-
-.middleofeverything {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
-.social-media twitterwidget::shadow .Tweet-brand, .social-media twitterwidget::shadow .Tweet-actions {
-  display: none;
-}
-
-.instagram-media .instagram-media-rendered {
-    max-height: 620px; 
-}
-
-.timeline .stream { 
-	max-height: 640px !important;
-}
-ol.h-feed {
-	max-height: calc(100% - 80px);  !important;
-}
-#twitter-widget-0 {
-	max-height: calc(100% - 80px) !important;
-}
-
-.twitter-tweet .twitter-tweet-rendered {
-    max-height: calc(100% - 80px); 
-}
-
-.fb-post .fb_iframe_widget .fb_iframe_widget_fluid {	
-    max-height: 620px; 
-    background-color: #FFF;
-}
-
-.hideElement {
-    display: none;
-}
-
-.showElement {
-    display: block;
-}
-
-.onDark {
-    background-color: #000 !important;
-}
-
-.onLight {
-    background-color: #fff;
-}
-
-.twitter-grid {
-    color: transparent !important;
 }

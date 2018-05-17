@@ -16,11 +16,6 @@
     <body>
         
         <div ng-controller="liveControlCtrl">
-            <div ng-if="socialmedia.background =='greenScreen'" class="backgroundimage greenScreen">
-            </div>
-            <div ng-if="socialmedia.background == 'fullImage'" class="backgroundimage">
-                <img ng-src="/images/background.png">
-            </div>
             <div id="tweetElement" ng-class="[socialmedia.design, socialmedia.pos, socialmedia.animate]" ng-if="socialmedia.tweetLive"> <!-- ng-show="socialmedia.show" -->
                 <div class="tweetContent">
                     <div class="tweetHeader">
@@ -49,15 +44,7 @@
                 </div>
             </div>
         </div>
-        
-        <div ng-controller="manualControlCtrl">
-			<div id="manual" my-directive class="{{manual.pos}} social-media">
-				<div ng-bind-html="tweetHTML" class="{{manual.animate}} tweetcontent" style="-webkit-transform:scale({{manual.scale}}); -webkit-transform-origin: {{manual.pos}}" ng-show="manual.show"></div>
-			</div>
-        </div>
-
+    
         <script type="text/javascript" src="/js/cg.js"></script>
-        <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        <script async defer src="http://platform.instagram.com/en_US/embeds.js"></script>
     </body>
 </html>

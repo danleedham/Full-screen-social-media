@@ -33,11 +33,10 @@ var config = {
 var twitter = new module.exports.Twitter(config);
 
 var socialmedia = {pos: "bottomLeft", design: "defaultDesign", animate: "toggle", background: "fullImage", tweetLive: false};
-var twitterList = {};
 var twitterOptions = {searchText: "", searchBy: "popular", searchMedia: "all"};
 var twitterTopTweet = {};
 var instagramList = {};
-var manual = {tweet: "", image:"largelogo.png", pos: "middleofeverything", tweethtml: "", scale: 100};
+var twitterList = {};
 
 // Do some connections wizardry
 io.on('connection', function(socket) {
@@ -95,18 +94,6 @@ io.on('connection', function(socket) {
 	
     socket.on("instagramList:get", function(msg) {
         io.sockets.emit("instagramList", instagramList);
-	});
-	
-	/*
-	 * 		Manual Control
-	 */
-	socket.on("manual", function(msg) {
-        manual = msg;
-		io.sockets.emit("manual", msg);
-	});
-
-    socket.on("manual:get", function(msg) {
-        io.sockets.emit("manual", manual);
 	});
 
 });
