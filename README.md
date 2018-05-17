@@ -1,10 +1,8 @@
-# Full Screen Social Media Graphics
+# Social Media Graphics for CasparCG
 
 ![Screenshot](https://image.ibb.co/kgdAoy/Screen_Shot_2018_05_17_at_09_55_51.png "Screenshot")
 
-## Setting background image
-
-Navigate to /public/images/ and overwrite ```background.png``` with an of the same resolution as your output (for example, 1280x720, 1920x1080. Whether the image is used is controlled in the backend. 
+By removing all the code that's CasparCG is unfriendly towards, I've repurposed the current version of the Full Screen Social Media app to work within CasparCG 2.1.0 Beta 2.
 
 ## Launching 
 
