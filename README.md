@@ -23,7 +23,7 @@ node server.js
 
 ## Using
 
-You MUST add some Twitter API credentials, as Twitter requires this. Get these at https://apps.twitter.com/ (Signup for a new app, it can be named anything etc.) by clicking on Keys and Access Tokens. Head to /public/server.js and pop down to line number 26. Copy across the four required acccess codes then restart your server if you've already started it. 
+You MUST add some Twitter API credentials, as Twitter requires this. Get these at https://apps.twitter.com/ (Signup for a new app, it can be named anything etc.) by clicking on Keys and Access Tokens. Head to ```server.js``` and pop down to line number 26. Copy across the four required acccess codes then restart your server if you've already started it. 
 
 For the [admin](http://127.0.0.1:3002/admin) page, navigate to http://127.0.0.1:3002/admin
 

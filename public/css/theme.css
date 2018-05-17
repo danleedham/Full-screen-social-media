@@ -116,25 +116,27 @@ label {
 .bottomCenter  {
     position: fixed;
     bottom: 3.5%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, 0%);
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .topCenter  {
     position: fixed;
     top: 3.5%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, 0%);
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .middleOfEverything {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 0;
+    right: 0;
+	top: 50%;
+	margin: -15% auto 15% auto;
 }
 
 
@@ -205,11 +207,38 @@ div#tweetElement.defaultDesign {
 div#tweetElement.lowerThirdDesign {
     min-width: 375px;
     position: absolute;
-    bottom: 3.5%; /* EBU Action Safe Zone */ 
-    left: 3.5%;  /* EBU Action Safe Zone */
     width: 35%;
-    background-color: #f2f2f2;
     border-bottom: 0.4vmax solid #1f1a34;
+}
+
+div#tweetElement.lowerThirdDesign.bottomCenter {
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	transform: none !important;
+}
+
+div#tweetElement.lowerThirdDesign.topCenter {
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	position: absolute;
+	top: 50%;
+	margin: -15% auto 15% auto;
+	transform: none !important;
+}
+
+div#tweetElement.lowerThirdDesign.middleOfEverything {
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	position: absolute;
+	top: 50%;
+	margin: 5% auto 15% auto;
+	transform: none !important;
 }
 
 .lowerThirdDesign .tweetProfileImage {
@@ -257,7 +286,7 @@ div#tweetElement.lowerThirdDesign {
     padding: 1.0vmax;
     display: block;
     position: absolute;
-    bottom: calc(2.0vmax - 1px);
+    bottom: 1.9vmax;
     width: 100%;
 }
 
