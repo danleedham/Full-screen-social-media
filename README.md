@@ -1,5 +1,7 @@
 # Full Screen Social Media Graphics
 
+![Screenshot](https://image.ibb.co/kgdAoy/Screen_Shot_2018_05_17_at_09_55_51.png "Screenshot")
+
 ## Setting background image
 
 Navigate to /public/images/ and overwrite ```background.png``` with an of the same resolution as your output (for example, 1280x720, 1920x1080. Whether the image is used is controlled in the backend. 
