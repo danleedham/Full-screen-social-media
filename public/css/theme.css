@@ -52,10 +52,6 @@ label {
     bottom: 50px;
 }
 
-.fullwidth {
-	width: calc(100% - 100px);
-}
-
 .top {
 	top: 50px;
 }
