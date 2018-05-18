@@ -234,8 +234,20 @@ app.controller('newTwitterCGController', ['$scope', 'TwitterService', 'socket', 
 
         $scope.makeLive = function(result){
             $scope.twitterTopTweet = result;
+            socket.emit("socialmediashow", "showTweet");
             return localStorageService.set('twitterTopTweet',$scope.twitterTopTweet);
         }
+
+        $scope.hideLive = function(result){
+            socket.emit("socialmediahide", "hideTweet");
+        }
+
+        // If the twitterOptions $scope updates, let's send that update to the server.
+        $scope.$watch('twitterTopTweet', function() {
+            if ($scope.twitterTopTweet) {
+                socket.emit("twitterTopTweet", $scope.twitterTopTweet);
+            }
+        }, true);
 
         // Function for clearning the search results
         $scope.clearCurrentSearch = function(){

@@ -54,6 +54,17 @@ io.on('connection', function(socket) {
     socket.on("socialmedia:get", function(msg) {
         io.sockets.emit("socialmedia", socialmedia);
 	});
+
+	socket.on("socialmediahide", function(msg) {
+		io.sockets.emit("socialmediahide", "hideTweet");
+		console.log("Hide Tweet");
+	});
+
+	socket.on("socialmediashow", function(msg) {
+		io.sockets.emit("socialmediashow", "showTweet");
+		console.log("Show Tweet");
+	});
+
 	
 	/*
 	 * 		Twitter

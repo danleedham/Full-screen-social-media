@@ -6,6 +6,14 @@ app.controller('liveControlCtrl', ['$scope', '$http', 'socket',
         socket.on("socialmedia", function (msg) {
             $scope.socialmedia = msg;
         });
+
+        socket.on("socialmediahide", function (msg) {
+            $scope.socialmedia.tweetLive = false;
+        });
+
+        socket.on("socialmediashow", function (msg) {
+            $scope.socialmedia.tweetLive = true;
+        });
         			
         $scope.$watch('socialmedia', function() {
             if (!$scope.socialmedia) {
@@ -21,7 +29,7 @@ app.controller('liveControlCtrl', ['$scope', '$http', 'socket',
         socket.on("twitterTopTweet", function (msg) {
             $scope.twitterTopTweet = msg;
             // Shuffling of multi-image tweets
-            if($scope.twitterTopTweet.extended_entities.media.length > 1){
+            if($scope.twitterTopTweet.extended_entities !== undefined && $scope.twitterTopTweet.extended_entities.media.length > 1){
                 $scope.currentImageValue = 0;
                 setInterval($scope.rotateImages,3000);
             }
