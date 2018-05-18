@@ -1,6 +1,8 @@
 # Full Screen Social Media Graphics
 
-![Screenshot](https://image.ibb.co/kgdAoy/Screen_Shot_2018_05_17_at_09_55_51.png "Screenshot")
+![Screenshot](https://image.ibb.co/mGrxLd/Full_Screen_Social_Media_Front_End.png "Frontend")
+
+![Screenshot](https://image.ibb.co/hjFeYy/Full_Screen_Social_Media_Back_End.png "Backend")
 
 ## Setting background image
 
