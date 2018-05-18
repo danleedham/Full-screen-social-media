@@ -143,7 +143,7 @@ app.post('/twitter/search', function (req, res) {
 	}
 	var data = twitter.getSearch({ q: searchText+filterRetweets+filterImages, 'count': 20, 'result\_type':resultType, 'lang':'en', 'include_entities':'true', 'tweet_mode':'extended'}, function(error, response, body){
 		res.status(404).send({
-			"error" : "Nothing Found. Probably not authorised"
+			"error" : "Nothing Found. Most likley the Twitter API keys have not been added to server.js so unauthorised to make API calls. (" + error.data + ") "
 		});
 	}, function(data){
 		res.send({
