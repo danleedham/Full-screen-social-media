@@ -131,7 +131,7 @@ app.post('/twitter/search', function (req, res) {
 	var searchText = req.body.searchText;
 	var resultType = req.body.searchBy;
 	var searchMedia = req.body.searchMedia;
-	var filterRetweets = '-filter:retweets';
+	var filterRetweets = ' -filter:retweets';
 	if(req.body.searchMedia == "searchOnlyImages"){
 		var filterImages = '+filter:images';
 	} else if (req.body.searchMedia == "searchOnlyMedia"){
@@ -141,7 +141,7 @@ app.post('/twitter/search', function (req, res) {
 	} else {
 		var filterImages = "";
 	}
-	var data = twitter.getSearch({ q: searchText+filterRetweets+filterImages, 'count': 20, 'result\_type':resultType, 'lang':'en', 'include_entities':'true', 'tweet_mode':'extended'}, function(error, response, body){
+	var data = twitter.getSearch({ q: searchText+filterImages+filterRetweets, 'count': 20, 'result\_type':resultType, 'lang':'en', 'include_entities':'true', 'tweet_mode':'extended'}, function(error, response, body){
 		res.status(404).send({
 			"error" : "Nothing Found. Most likley the Twitter API keys have not been added to server.js so unauthorised to make API calls. (" + error.data + ") "
 		});

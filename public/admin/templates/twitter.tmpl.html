@@ -51,6 +51,11 @@
       </div>     
       <div class="text nine wide column">
         {{result.full_text}}
+        <br />
+        <div style="display: inline;" ng-if="result.retweet_count > 0"><span class="tweetRetweet">RT:</span>
+        {{result.retweet_count}}</div>
+        <div style="display: inline;" ng-if="result.favorite_count > 0"><span class="tweetFavorite">FV:</span>
+        {{result.favorite_count}}</div>
         <div ng-repeat="media in result.extended_entities.media" class="nine wide column" style="padding-top: 6px">
             <img ng-src="{{media.media_url}}" width="{{media.sizes.small.w}}" height="{{media.sizes.small.h}}" class="tweetMedia">
           </div>
